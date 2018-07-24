@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -26,7 +25,7 @@ public class RouterFunctionConf {
                 Flux.interval(Duration.ofSeconds(1)).
                         map(l -> "Index " + LocalDateTime.now() ),
                 String.class);
-
-       return route(GET("/"), req -> responseMono);
+        System.out.println("");
+        return route(GET("/"), req -> responseMono);
     }
 }
