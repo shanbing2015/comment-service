@@ -12,15 +12,15 @@ import reactor.ipc.netty.http.server.HttpServer;
 
 //@Configuration
 public class HttpServerConfig {
-    @Autowired
-    private Environment environment;
-
-    @Bean
-    public HttpServer httpServer(RouterFunction<?> routerFunction) {
-        HttpHandler httpHandler = RouterFunctions.toHttpHandler(routerFunction);
-        ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(httpHandler);
-        HttpServer server = HttpServer.create("localhost", Integer.valueOf(environment.getProperty("server.port","8089")));
-        server.newHandler(adapter);
-        return server;
-    }
+//    @Autowired
+//    private Environment environment;
+//
+//    @Bean
+//    public HttpServer httpServer(RouterFunction<?> routerFunction) {
+//        HttpHandler httpHandler = RouterFunctions.toHttpHandler(routerFunction);
+//        ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(httpHandler);
+//        HttpServer server = HttpServer.create("localhost", Integer.valueOf(environment.getProperty("server.port","8089")));
+//        server.newHandler(adapter);
+//        return server;
+//    }
 }

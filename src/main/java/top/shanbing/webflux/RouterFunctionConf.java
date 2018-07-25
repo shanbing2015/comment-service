@@ -1,4 +1,4 @@
-package top.shanbing.config;
+package top.shanbing.webflux;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;

@@ -11,6 +11,7 @@ import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.domain.model.result.PageResult;
 import top.shanbing.domain.model.result.ResultUtil;
 import top.shanbing.service.CommentService;
+import top.shanbing.util.CommentUtil;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,10 @@ public class CommentController {
 
     @PostMapping(value = "/save", produces = "application/json")
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq){
-        commentService.save(addReq);
+        String ip = "";
+        String deviceType = "";
+        CommentUtil.isIpBlack(ip);
+        commentService.save(addReq,ip,deviceType);
         return Mono.just(ResultUtil.success());
     }
 

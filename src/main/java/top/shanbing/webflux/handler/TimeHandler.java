@@ -1,4 +1,4 @@
-package top.shanbing.handler;
+package top.shanbing.webflux.handler;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
