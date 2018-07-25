@@ -1,0 +1,25 @@
+server:
+  port: 80
+spring:
+  profiles:
+    active: dev
+  application:
+    name: comment-service
+#  datasource:
+#    username: *****
+#    password: *****
+#    url: jdbc:mysql://****
+#    driver-class-name: com.mysql.jdbc.Driver
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    更多mysql配置自行配置
+
+#mybatis相关配置
+mybatis:
+  mapperLocations: classpath:mapper/**/*.xml
+  typeAliasesPackage: top.shanbing.domain.entity
+  configuration:
+    #mybatis开启驼峰自动转换
+    map-underscore-to-camel-case: true
+    #cache-enabled: false
+    #local-cache-scope: statement
+

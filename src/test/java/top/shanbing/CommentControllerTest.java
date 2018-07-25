@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import top.shanbing.domain.model.comment.CommentAddReq;
+import top.shanbing.domain.model.comment.CommentListReq;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -24,7 +25,7 @@ public class CommentControllerTest {
         addReq.postUrl = "https://www.shanbing.top/about/";
         addReq.commentName = "test";
         addReq.commentContacts = "shanbing.top@gmail.com";
-        addReq.commentContent = "评论内容";
+        addReq.commentContent = "评论内容test";
         byte[] result = client.post().uri("comment/v1/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(addReq), CommentAddReq.class)
@@ -33,11 +34,28 @@ public class CommentControllerTest {
                 .expectBody().returnResult().getResponseBody();
         System.out.println(new String(result));
     }
+    public static void testList() throws Exception {
+        WebTestClient client = WebTestClient.bindToServer().baseUrl("http://localhost:8080").build();
+        System.out.println(client);
+        CommentListReq req = new CommentListReq();
+        req.siteUrl = "https://www.shanbing.top";
+        req.postUrl = "https://www.shanbing.top/about/";
+
+        byte[] result = client.post().uri("comment/v1/list")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(req), CommentListReq.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody().returnResult().getResponseBody();
+        System.out.println(new String(result));
+    }
+
 
 
 
     public static void main(String[] args)  throws Exception{
-        testCreateUser();
+        //testCreateUser();
+        testList();
 //        WebTestClient client = WebTestClient.bindToServer().baseUrl("http://localhost:8080").build();
 //        System.out.println(client);
 //        String responseBody = new String(client.get().uri("/").exchange().expectBody().returnResult().getResponseBody());

@@ -6,7 +6,7 @@ public class CommentPosts {
     private Integer id;
     private Integer siteId;
     private String postUrl;
-    private Date createtime;
+    private Date createtime = new Date();
 
     public CommentPosts() {
     }

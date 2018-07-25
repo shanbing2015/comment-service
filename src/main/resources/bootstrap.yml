@@ -1,8 +1,0 @@
-server:
-  port: 9110
-spring:
-  application:
-    name: comment-service
-
-
-

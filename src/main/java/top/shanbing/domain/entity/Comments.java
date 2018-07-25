@@ -8,8 +8,8 @@ public class Comments {
     private String commentName;
     private String commentContacts;
     private String commentContent;
-    private Date createtime;
-    private Integer type;   //1正常,2删除,3置顶
+    private Date createtime = new Date();
+    private Integer type = 1;   //1正常,2删除,3置顶
     private String ip;
     private String deviceType;
 

@@ -12,6 +12,11 @@ public class PageResult<T> {
     public PageResult() {
     }
 
+    public PageResult(Integer pageSize,Integer pageNum) {
+        if(pageSize!=null && pageSize>0) this.pageSize = pageSize;
+        if(pageNum!=null && pageNum>0) this.pageNum = pageNum;
+    }
+
     public PageResult(int pageSize,int pageNum, List <T> list) {
         this.list = list;
         this.pageNum = pageNum;

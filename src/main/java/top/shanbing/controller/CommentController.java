@@ -27,15 +27,14 @@ public class CommentController {
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq){
         String ip = "";
         String deviceType = "";
-        CommentUtil.isIpBlack(ip);
+        //CommentUtil.isIpBlack(ip);
         commentService.save(addReq,ip,deviceType);
         return Mono.just(ResultUtil.success());
     }
 
     @PostMapping(value ="/list", produces = "application/json")
     public Mono<JsonResult> list(@RequestBody CommentListReq listReq){
-        PageResult pageResult = new PageResult();
-        pageResult.setList(new ArrayList());
+        PageResult pageResult = commentService.getList(listReq);
         return Mono.just(ResultUtil.success(pageResult));
     }
 }

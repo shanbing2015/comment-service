@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.shanbing.domain.mapper.CommentMapper">
+
+    <resultMap id="siteMap" type="top.shanbing.domain.entity.CommentSites">
+        <id column="id" property="id"/>
+        <result column="site_url" property="siteUrl" />
+        <result column="type" property="type" />
+        <result column="createtime" property="createtime" />
+    </resultMap>
+
+    <resultMap id="postMap" type="top.shanbing.domain.entity.CommentPosts">
+        <id column="id" property="id"/>
+        <result column="site_id" property="siteId"/>
+        <result column="post_url" property="postUrl"/>
+        <result column="createtime" property="createtime"/>
+    </resultMap>
+
+    <resultMap id="commentMap" type="top.shanbing.domain.entity.Comments">
+        <id column="id" property="id"/>
+        <result column="comment_name" property="commentName"/>
+        <result column="comment_contacts" property="commentContacts"/>
+        <result column="comment_content" property="commentContent"/>
+        <result column="createtime" property="createtime"/>
+        <result column="type" property="type"/>
+        <result column="ip" property="ip"/>
+        <result column="device_type" property="deviceType"/>
+    </resultMap>
+
+    <select id="selectCommentSitesBySiteUrl" resultMap="siteMap">
+        select id,site_url,type,createtime from comment_sites where site_url = #{siteUrl}
+    </select>
+
+    <select id="selectCommentPostsByPostUrl" resultMap="postMap">
+        select id,site_id,post_url,createtime from comment_posts where post_url = #{postUrl}
+    </select>
+
+    <insert id="insertSite" useGeneratedKeys="true" keyProperty="id" parameterType="top.shanbing.domain.entity.CommentSites">
+        insert into comment_sites ( site_url,type,createtime ) value ( #{siteUrl},#{type},#{createtime} )
+    </insert>
+
+    <insert id="insertPost" useGeneratedKeys="true" keyProperty="id" parameterType="top.shanbing.domain.entity.CommentPosts">
+        insert into comment_posts ( site_id,post_url,createtime ) value ( #{siteId},#{postUrl},#{createtime} )
+    </insert>
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id" parameterType="top.shanbing.domain.entity.Comments">
+        insert into comments ( post_id,comment_name,comment_contacts,comment_content,createtime,type,ip,device_type )
+         value ( #{postId},#{commentName},#{commentContacts},#{commentContent},#{createtime},#{type},#{ip},#{deviceType} )
+    </insert>
+
+    <select id="selectCommentList" resultMap="commentMap">
+        SELECT t.id,comment_name,comment_contacts,comment_content,t.createtime,t.type,ip,device_type
+        FROM comments t
+        LEFT JOIN comment_posts post ON  post.site_id = t.post_id
+        LEFT JOIN comment_sites site ON post.site_id = site.id
+        WHERE site.site_url = #{siteUrl}
+        AND post.post_url = #{postUrl}
+        LIMIT
+        <choose>
+            <when test="limit !=null and limit >= 1">
+                #{limit}
+            </when>
+            <otherwise>
+                1
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="offset !=null and offset >= 1">
+                , #{offset}
+            </when>
+            <otherwise>
+                ,10
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

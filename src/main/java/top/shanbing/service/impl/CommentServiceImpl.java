@@ -2,33 +2,43 @@ package top.shanbing.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import top.shanbing.common.AppPage;
 import top.shanbing.domain.entity.CommentPosts;
 import top.shanbing.domain.entity.CommentSites;
 import top.shanbing.domain.entity.Comments;
-import top.shanbing.domain.mapper.CommentMapping;
+import top.shanbing.domain.mapper.CommentMapper;
 import top.shanbing.domain.model.comment.CommentAddReq;
+import top.shanbing.domain.model.comment.CommentListReq;
+import top.shanbing.domain.model.comment.CommentListRes;
+import top.shanbing.domain.model.result.PageResult;
 import top.shanbing.service.CommentService;
 import top.shanbing.util.CommentUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    private CommentMapping commentMapping;
+    @Autowired
+    private CommentMapper commentMapper;
 
-    //TODO 事务
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void save(CommentAddReq addReq,String ip,String deviceType) {
 
-        CommentSites site = commentMapping.selectCommentSitesBySiteUrl(addReq.siteUrl);
+        CommentSites site = commentMapper.selectCommentSitesBySiteUrl(addReq.siteUrl);
         if(site == null){
             site = new CommentSites(addReq.siteUrl,1);
             this.saveSite(site);
         }
         CommentUtil.isSiteBlack(site);
 
-        CommentPosts post = commentMapping.selectCommentPostsByPostUrl(addReq.postUrl);
+        CommentPosts post = commentMapper.selectCommentPostsByPostUrl(addReq.postUrl);
         if(post == null){
             post = new CommentPosts(site.getId(),addReq.postUrl);
             this.savePost(post);
@@ -38,18 +48,48 @@ public class CommentServiceImpl implements CommentService {
         this.saveComment(comment);
     }
 
-    public void saveSite(CommentSites site) {
+    @Override
+    public PageResult<CommentListRes> getList(CommentListReq req) {
+        if(req.pageNum == null || req.pageNum <= 0){
+            req.pageNum = AppPage.pageNum;
+        }
+        if(req.pageSize == null || req.pageSize <=0 || req.pageSize >= 50){
+            req.pageSize = AppPage.pageSize;
+        }
+
+        Integer limit = (req.pageNum -1) * AppPage.pageSize;
+        Integer offset = req.pageSize;
+
+        List<Comments> list = commentMapper.selectCommentList(req.siteUrl,req.postUrl,limit ,offset );
+        return this.commentListVO(req.pageNum,req.pageSize,list);
+    }
+
+    private void saveSite(CommentSites site) {
         site.setId(1);
         log.info("保存站点:"+site.toString());
+        commentMapper.insertSite(site);
     }
 
-    public void savePost(CommentPosts posts) {
+    private void savePost(CommentPosts posts) {
         posts.setId(2);
         log.info("保存帖子:"+posts.toString());
+        commentMapper.insertPost(posts);
     }
 
-    public void saveComment(Comments comment) {
+    private void saveComment(Comments comment) {
         comment.setId(3);
         log.info("保存评论:"+comment.toString());
+        commentMapper.insertComment(comment);
+    }
+
+    private PageResult<CommentListRes> commentListVO(Integer pageSize,Integer pageNum,List<Comments> list){
+        PageResult<CommentListRes> pageResult = new PageResult<>(pageSize,pageNum);
+        List<CommentListRes> resList = new ArrayList<>();
+        list.forEach( comment -> {
+            CommentListRes commentListRes = new CommentListRes(comment.getId(),comment.getCommentName(), comment.getCommentContacts(),comment.getCommentContent(), comment.getCreatetime());
+            resList.add(commentListRes);
+        });
+        pageResult.setList(resList);
+        return pageResult;
     }
 }

@@ -5,8 +5,8 @@ import java.util.Date;
 public class CommentSites {
     private Integer id;
     private String siteUrl;
-    private Integer type;       //站点状态:1、正常；2、加黑单
-    private Date createtime;
+    private Integer type = 1;       //站点状态:1、正常；2、加黑单
+    private Date createtime = new Date();
 
     public CommentSites() {
     }

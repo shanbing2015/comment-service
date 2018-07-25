@@ -18,7 +18,7 @@ public class CommentUtil {
      * @throws BizException 业务异常
      */
     public static void isSiteBlack(CommentSites site) throws BizException{
-        if(site.getType() == 1){
+        if(site.getType() == 2){
             throw new BizException(ErrorCodeEnum.SITE_BLACK_ERROR);
         }
     }
