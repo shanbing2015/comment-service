@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   datasource:
-    username: shanbing
+    username: test
     password: 123456
     url: jdbc:mysql://120.79.223.130:3306/comment?useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
