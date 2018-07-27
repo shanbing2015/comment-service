@@ -37,7 +37,8 @@ public class CommentController {
     }
 
     @PostMapping(value ="/list", produces = "application/json")
-    public Mono<JsonResult> list(@RequestBody CommentListReq listReq){
+    public Mono<JsonResult> list(@RequestBody CommentListReq listReq) throws UnsupportedEncodingException{
+        listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
         PageResult pageResult = commentService.getList(listReq);
         return Mono.just(ResultUtil.success(pageResult));
     }
