@@ -7,4 +7,15 @@ public class CommentAddReq {
     public String commentName;
     public String commentContacts;
     public String commentContent;
+
+    @Override
+    public String toString() {
+        return "CommentAddReq{" +
+                "siteUrl='" + siteUrl + '\'' +
+                ", postUrl='" + postUrl + '\'' +
+                ", commentName='" + commentName + '\'' +
+                ", commentContacts='" + commentContacts + '\'' +
+                ", commentContent='" + commentContent + '\'' +
+                '}';
+    }
 }

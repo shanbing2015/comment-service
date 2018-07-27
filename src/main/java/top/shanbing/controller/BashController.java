@@ -1,6 +1,9 @@
 package top.shanbing.controller;
 
+import io.netty.handler.codec.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.shanbing.common.exception.BizException;
@@ -22,7 +25,7 @@ public class BashController {
     }
 
     @RequestMapping("/test")
-    public void test(){
+    public void test(ServerHttpRequest request,ServerHttpResponse response){
         throw new IllegalArgumentException("测试异常");
     }
 
