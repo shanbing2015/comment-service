@@ -51,8 +51,8 @@
     <select id="selectCommentList" resultMap="commentMap">
         SELECT t.id,comment_name,comment_contacts,comment_content,t.createtime,t.type,ip,device_type
         FROM comments t
-        LEFT JOIN comment_posts post ON  post.site_id = t.post_id
-        LEFT JOIN comment_sites site ON post.site_id = site.id
+        JOIN comment_posts post ON post.id = t.post_id
+        JOIN comment_sites site ON site.id = post.site_id
         WHERE site.site_url = #{siteUrl}
         AND post.post_url = #{postUrl}
         LIMIT
