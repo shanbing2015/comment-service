@@ -13,6 +13,7 @@ import top.shanbing.domain.model.result.ResultUtil;
 import top.shanbing.service.CommentService;
 import top.shanbing.util.CommentUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 @RequestMapping("comment/v1")
@@ -23,11 +24,14 @@ public class CommentController {
     @Autowired
     protected CommentService commentService;
 
-    @PostMapping(value = "/save", produces = "application/json")
-    public Mono<JsonResult> save(@RequestBody CommentAddReq addReq){
+    @RequestMapping(value = "/save", produces = "application/json" ,consumes="application/json")
+    public Mono<JsonResult> save(@RequestBody CommentAddReq addReq) throws UnsupportedEncodingException {
         String ip = "";
         String deviceType = "";
         //CommentUtil.isIpBlack(ip);
+        System.out.println("解码前:"+addReq.postUrl);
+        addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
+        System.out.println("解码后:"+addReq.postUrl);
         commentService.save(addReq,ip,deviceType);
         return Mono.just(ResultUtil.success());
     }

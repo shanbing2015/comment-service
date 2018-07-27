@@ -54,8 +54,8 @@ public class CommentControllerTest {
 
 
     public static void main(String[] args)  throws Exception{
-        //testCreateUser();
-        testList();
+        testCreateUser();
+        //testList();
 //        WebTestClient client = WebTestClient.bindToServer().baseUrl("http://localhost:8080").build();
 //        System.out.println(client);
 //        String responseBody = new String(client.get().uri("/").exchange().expectBody().returnResult().getResponseBody());
