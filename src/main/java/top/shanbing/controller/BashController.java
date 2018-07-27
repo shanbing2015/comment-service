@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.shanbing.common.exception.BizException;
 import top.shanbing.domain.enums.ErrorCodeEnum;
 import top.shanbing.service.BashService;
+import top.shanbing.util.HttpUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ public class BashController {
 
     @RequestMapping("/test")
     public void test(ServerHttpRequest request,ServerHttpResponse response){
+        String ip = HttpUtil.getIp(request);
+        System.out.println("访问IP:"+ip);
         throw new IllegalArgumentException("测试异常");
     }
 

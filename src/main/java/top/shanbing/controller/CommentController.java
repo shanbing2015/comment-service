@@ -4,10 +4,12 @@ import io.netty.handler.codec.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.client.reactive.ClientHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import reactor.core.publisher.Mono;
+import reactor.ipc.netty.http.client.HttpClientRequest;
 import top.shanbing.domain.model.comment.CommentAddReq;
 import top.shanbing.domain.model.comment.CommentListReq;
 import top.shanbing.domain.model.result.JsonResult;
@@ -43,7 +45,7 @@ public class CommentController {
     }
 
     @PostMapping(value ="/list", produces = "application/json")
-    public Mono<JsonResult> list(@RequestBody CommentListReq listReq,ServerHttpRequest request) throws UnsupportedEncodingException{
+    public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request) throws UnsupportedEncodingException{
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
         String ip = HttpUtil.getIp(request);
         log.info("访问IP:"+ip+listReq.toString());
