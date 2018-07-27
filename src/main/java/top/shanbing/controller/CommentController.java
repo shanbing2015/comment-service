@@ -30,20 +30,26 @@ public class CommentController {
 
     @RequestMapping(value = "/save", produces = "application/json" ,consumes="application/json")
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq,ServerHttpRequest request) throws UnsupportedEncodingException {
+
+        System.out.println("解码前:"+addReq.postUrl);
+        addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
+        System.out.println("解码后:"+addReq.postUrl);
         String ip = HttpUtil.getIp(request);
         log.info(ip+addReq.toString());
         String deviceType = "";
         //CommentUtil.isIpBlack(ip);
-        System.out.println("解码前:"+addReq.postUrl);
-        addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
-        System.out.println("解码后:"+addReq.postUrl);
         commentService.save(addReq,ip,deviceType);
         return Mono.just(ResultUtil.success());
     }
 
     @PostMapping(value ="/list", produces = "application/json")
-    public Mono<JsonResult> list(@RequestBody CommentListReq listReq) throws UnsupportedEncodingException{
+    public Mono<JsonResult> list(@RequestBody CommentListReq listReq,ServerHttpRequest request) throws UnsupportedEncodingException{
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
+        String ip = HttpUtil.getIp(request);
+        log.info("访问IP:"+ip+listReq.toString());
+        String deviceType = "";
+        //CommentUtil.isIpBlack(ip);
+
         PageResult pageResult = commentService.getList(listReq);
         return Mono.just(ResultUtil.success(pageResult));
     }

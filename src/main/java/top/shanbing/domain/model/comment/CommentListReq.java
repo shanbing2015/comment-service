@@ -6,4 +6,13 @@ public class CommentListReq {
     public Integer pageSize;
     public Integer pageNum;
 
+    @Override
+    public String toString() {
+        return "CommentListReq{" +
+                "siteUrl='" + siteUrl + '\'' +
+                ", postUrl='" + postUrl + '\'' +
+                ", pageSize=" + pageSize +
+                ", pageNum=" + pageNum +
+                '}';
+    }
 }
