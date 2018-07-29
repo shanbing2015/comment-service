@@ -29,7 +29,12 @@ public class CommentController {
 
     @RequestMapping(value = "/save", produces = "application/json" ,consumes="application/json")
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq,ServerHttpRequest request) throws UnsupportedEncodingException {
+
         addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
+        addReq.commentName = HttpUtil.htmlEncode(addReq.commentName);
+        addReq.commentContacts = HttpUtil.htmlEncode(addReq.commentContacts);
+        addReq.commentContent = HttpUtil.htmlEncode(addReq.commentContent);
+
         String ip = HttpUtil.getIp(request);
         String deviceType = HttpUtil.deviceType(request);
         log.info("请求IP:"+ip+",设备类型:"+deviceType+"\t[siteUrl:"+addReq.siteUrl+",postUrl:"+addReq.postUrl+",commentContent:"+addReq.commentContent+"]");

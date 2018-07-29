@@ -12,11 +12,13 @@ public class Comments {
     private Integer type = 1;   //1正常,2删除,3置顶
     private String ip;
     private String deviceType;
+    private Integer parentId;
+    private Integer beReplyId;
 
     public Comments() {
     }
 
-    public Comments(Integer postId, String commentName, String commentContacts, String commentContent, Integer type, String ip, String deviceType) {
+    public Comments(Integer postId, String commentName, String commentContacts, String commentContent, Integer type, String ip, String deviceType,Integer parentId,Integer beReplyId) {
         this.postId = postId;
         this.commentName = commentName;
         this.commentContacts = commentContacts;
@@ -24,6 +26,8 @@ public class Comments {
         this.type = type;
         this.ip = ip;
         this.deviceType = deviceType;
+        this.beReplyId = beReplyId;
+        this.parentId = parentId;
     }
 
     @Override
@@ -38,6 +42,8 @@ public class Comments {
                 ", type=" + type +
                 ", ip='" + ip + '\'' +
                 ", deviceType='" + deviceType + '\'' +
+                ", parentId='" + parentId + '\'' +
+                ", beReplyId='" + beReplyId + '\'' +
                 '}';
     }
 
@@ -111,5 +117,21 @@ public class Comments {
 
     public void setDeviceType(String deviceType) {
         this.deviceType = deviceType;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getBeReplyId() {
+        return beReplyId;
+    }
+
+    public void setBeReplyId(Integer beReplyId) {
+        this.beReplyId = beReplyId;
     }
 }

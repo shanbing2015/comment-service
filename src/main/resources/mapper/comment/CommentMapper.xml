@@ -44,8 +44,8 @@
     </insert>
 
     <insert id="insertComment" useGeneratedKeys="true" keyProperty="id" parameterType="top.shanbing.domain.entity.Comments">
-        insert into comments ( post_id,comment_name,comment_contacts,comment_content,createtime,type,ip,device_type )
-         value ( #{postId},#{commentName},#{commentContacts},#{commentContent},#{createtime},#{type},#{ip},#{deviceType} )
+        insert into comments ( post_id,comment_name,comment_contacts,comment_content,createtime,type,ip,device_type,parent_id,be_reply_id)
+         value ( #{postId},#{commentName},#{commentContacts},#{commentContent},#{createtime},#{type},#{ip},#{deviceType},#{parentId},#{beReplyId} )
     </insert>
 
     <select id="selectCommentList" resultMap="commentMap">

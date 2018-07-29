@@ -44,7 +44,10 @@ public class CommentServiceImpl implements CommentService {
             this.savePost(post);
         }
 
-        Comments comment = new Comments(post.getId(),addReq.commentName,addReq.commentContacts,addReq.commentContent,1,ip,deviceType);
+        //todo addReq.parentId 检查父节点是否存在
+        //todo beReplyId  检查是否存在
+
+        Comments comment = new Comments(post.getId(),addReq.commentName,addReq.commentContacts,addReq.commentContent,1,ip,deviceType,addReq.parentId,addReq.beReplyId);
         this.saveComment(comment);
     }
 

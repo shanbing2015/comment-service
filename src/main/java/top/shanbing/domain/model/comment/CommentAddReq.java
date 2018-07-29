@@ -7,6 +7,8 @@ public class CommentAddReq {
     public String commentName;
     public String commentContacts;
     public String commentContent;
+    public Integer beReplyId;//被回复id
+    public Integer parentId;//父节点回复
 
     @Override
     public String toString() {
@@ -16,6 +18,8 @@ public class CommentAddReq {
                 ", commentName='" + commentName + '\'' +
                 ", commentContacts='" + commentContacts + '\'' +
                 ", commentContent='" + commentContent + '\'' +
+                ", beReplyId='" + beReplyId + '\'' +
+                ", parentId='" + parentId + '\'' +
                 '}';
     }
 }
