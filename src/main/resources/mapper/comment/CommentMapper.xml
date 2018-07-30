@@ -25,6 +25,7 @@
         <result column="type" property="type"/>
         <result column="ip" property="ip"/>
         <result column="device_type" property="deviceType"/>
+        <result column="be_reply_id" property="beReplyId"/>
     </resultMap>
 
     <select id="selectCommentSitesBySiteUrl" resultMap="siteMap">
@@ -55,6 +56,8 @@
         JOIN comment_sites site ON site.id = post.site_id
         WHERE site.site_url = #{siteUrl}
         AND post.post_url = #{postUrl}
+        AND parent_id IS NULL
+        ORDER BY t.id,t.createtime
         LIMIT
         <choose>
             <when test="limit !=null and limit >= 1">
@@ -72,6 +75,12 @@
                 ,10
             </otherwise>
         </choose>
+    </select>
+
+    <select id="selectCommentByParentId" resultMap="commentMap">
+        SELECT t.id,comment_name,comment_contacts,comment_content,t.createtime,t.type,ip,device_type,be_reply_id
+        from  comments t where parent_id = #{parentId}
+        ORDER BY t.id,t.createtime
     </select>
 
 </mapper>

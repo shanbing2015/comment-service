@@ -13,12 +13,15 @@ import top.shanbing.domain.mapper.CommentMapper;
 import top.shanbing.domain.model.comment.CommentAddReq;
 import top.shanbing.domain.model.comment.CommentListReq;
 import top.shanbing.domain.model.comment.CommentListRes;
+import top.shanbing.domain.model.comment.ReplyComment;
 import top.shanbing.domain.model.result.PageResult;
 import top.shanbing.service.CommentService;
 import top.shanbing.util.CommentUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -88,8 +91,22 @@ public class CommentServiceImpl implements CommentService {
     private PageResult<CommentListRes> commentListVO(Integer pageSize,Integer pageNum,List<Comments> list){
         PageResult<CommentListRes> pageResult = new PageResult<>(pageSize,pageNum);
         List<CommentListRes> resList = new ArrayList<>();
+        Map<Integer,String> commentNameMap = new HashMap<>();
         list.forEach( comment -> {
+            commentNameMap.put(comment.getId(),comment.getCommentName());
             CommentListRes commentListRes = new CommentListRes(comment.getId(),comment.getCommentName(), comment.getCommentContacts(),comment.getCommentContent(), comment.getCreatetime());
+            // todo 这里后期可放在一起查询，提升效率
+            int parentId = comment.getId();
+            List<Comments> beReplyList = commentMapper.selectCommentByParentId(parentId); //该条评论下的评论
+            List<ReplyComment> replyComments = new ArrayList<>();
+            beReplyList.forEach( byReplyComment ->{
+                commentNameMap.put(byReplyComment.getId(),byReplyComment.getCommentName());
+                String replyCommentName = commentNameMap.get(byReplyComment.getBeReplyId());
+                if(replyCommentName == null)
+                    replyCommentName = "未知";
+                replyComments.add(new ReplyComment(byReplyComment.getId(),byReplyComment.getCommentName(),replyCommentName, byReplyComment.getCommentContacts(),byReplyComment.getCommentContent(), byReplyComment.getCreatetime()));
+            });
+            commentListRes.setReplys(replyComments);
             resList.add(commentListRes);
         });
         pageResult.setList(resList);

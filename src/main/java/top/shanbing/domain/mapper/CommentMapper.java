@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import top.shanbing.domain.entity.CommentPosts;
 import top.shanbing.domain.entity.CommentSites;
 import top.shanbing.domain.entity.Comments;
-import top.shanbing.domain.model.comment.CommentListRes;
 
 import java.util.List;
 
@@ -22,4 +21,5 @@ public interface CommentMapper {
     Integer insertComment(Comments comment);
 
     List<Comments> selectCommentList(@Param("siteUrl") String siteUrl,@Param("postUrl") String postUrl,@Param("limit") Integer limit ,@Param("offset") Integer offset );
+    List<Comments> selectCommentByParentId(@Param("parentId") int parentId);
 }
