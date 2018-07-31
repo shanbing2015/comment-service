@@ -2,6 +2,7 @@ package top.shanbing.controller;
 
 import io.netty.handler.codec.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,18 @@ public class BashController {
     @Autowired
     BashService bashService;
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String index(){
         System.out.println(LocalDateTime.now());
-        return "index";
+        return "index#"+LocalDateTime.now();
+    }
+
+    @RequestMapping("/home2")
+    public String index2(ServerHttpResponse response){
+        ResponseCookie cookie = ResponseCookie.from("Access-Control-Allow-Origin", "*").build();
+        response.addCookie(cookie);
+        System.out.println(LocalDateTime.now());
+        return "index2#"+LocalDateTime.now();
     }
 
     @RequestMapping("/test")
