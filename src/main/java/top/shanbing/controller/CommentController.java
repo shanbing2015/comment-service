@@ -31,7 +31,7 @@ public class CommentController {
     @Autowired
     protected CommentService commentService;
 
-    @RequestMapping(value = "/save", produces = "application/json" ,consumes="application/json")
+    @PostMapping(value = "/save", produces = "application/json" ,consumes="application/json")
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq,ServerHttpRequest request) throws UnsupportedEncodingException {
         //response.getHeaders().add("Access-Control-Allow-Origin", "*");
         addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
@@ -47,7 +47,7 @@ public class CommentController {
         return Mono.just(ResultUtil.success());
     }
 
-    @PostMapping(value ="/list", produces = "application/json")
+    @PostMapping(value ="/list", produces = "application/json",consumes="application/json")
     public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request) throws UnsupportedEncodingException{
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
         String ip = HttpUtil.getIp(request);

@@ -20,27 +20,19 @@
 自身是用Java语言进行后端开发，所以这里就基于springBoot2.0搭建一套敏捷的服务。
 
 主要用到的技术和框架以及依赖服务
-> spring-boot-2
-> spring-boot-starter-webflux
-> mysql
-
- 1. 接口设计
-    设计详情：一个新增评论和一个获取评论列表接口。API：[接口设计][1]
-
- 2. 数据库设计
- 3. 业务代码实现
-
----
-### 前端开发
-
+>* spring-boot-2
+>* spring-boot-starter-webflux
+>* mysql
 
 ---
 ### 插件使用
-
-可以直接copy前端插件代码进行
+[使用教程][1]
 
 ---
-### 下个版本更新建议
-> * 评论点赞、不认同功能
-> * 对评论进行回复
+### 待开发功能
 > * 第三方登陆账号后回复
+> * 接口限流
+> * 评论内容过滤关键字
+> * IP、站点监控拉黑
+
+[1]: https://www.shanbing.top/2018/07/26/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E7%BC%96%E5%86%99jekyll%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6.html#%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8
