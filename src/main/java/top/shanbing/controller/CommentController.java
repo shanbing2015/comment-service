@@ -49,8 +49,7 @@ public class CommentController {
 
     @PostMapping(value ="/list", produces = "application/json")
     public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request, ServerHttpResponse response) throws UnsupportedEncodingException{
-        ResponseCookie cookie = ResponseCookie.from("Access-Control-Allow-Origin", "*").build();
-        response.addCookie(cookie);
+        response.getHeaders().add("Access-Control-Allow-Origin", "*");
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
         String ip = HttpUtil.getIp(request);
         String deviceType = HttpUtil.deviceType(request);
