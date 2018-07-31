@@ -3,7 +3,9 @@ package top.shanbing.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import top.shanbing.service.CommentService;
 import top.shanbing.util.HttpUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("comment/v1")
 @RestController
@@ -44,7 +48,9 @@ public class CommentController {
     }
 
     @PostMapping(value ="/list", produces = "application/json")
-    public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request) throws UnsupportedEncodingException{
+    public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request, ServerHttpResponse response) throws UnsupportedEncodingException{
+        ResponseCookie cookie = ResponseCookie.from("Access-Control-Allow-Origin", "*").build();
+        response.addCookie(cookie);
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");
         String ip = HttpUtil.getIp(request);
         String deviceType = HttpUtil.deviceType(request);
