@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: comment
-    password: Comment@shanbing.top
+    password: Comment#123456
     url: jdbc:mysql://localhost:20180/comment?useUnicode=true&characterEncoding=utf8&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
