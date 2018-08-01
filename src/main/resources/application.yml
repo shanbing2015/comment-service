@@ -1,17 +1,11 @@
 server:
-  port: 80
+  port: 9110
 spring:
   profiles:
-    active: dev
+    active: dev   #spring.profiles.active jar启动配置里更改环境
   application:
     name: comment-service
-#  datasource:
-#    username: *****
-#    password: *****
-#    url: jdbc:mysql://****
-#    driver-class-name: com.mysql.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    更多mysql配置自行配置
+
 
 #mybatis相关配置
 mybatis:
@@ -23,3 +17,5 @@ mybatis:
     #cache-enabled: false
     #local-cache-scope: statement
 
+deploy:
+  env: pro
