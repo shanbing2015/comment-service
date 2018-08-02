@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.shanbing.domain.mapper.BlockMapping">
+
+    <resultMap id="ipBlockMap" type="top.shanbing.domain.entity.IpBlock">
+        <id column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="createtime" property="createtime"/>
+    </resultMap>
+
+
+    <select id="selectIpBlockByIp" resultMap="ipBlockMap">
+        select * from ip_block where ip = #{ip}
+    </select>
+
+</mapper>

@@ -1,6 +1,6 @@
 package top.shanbing.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import top.shanbing.common.UserAgent;
 
 import java.util.HashMap;
