@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.shanbing.common.AppPage;
+import top.shanbing.common.exception.BizException;
 import top.shanbing.domain.entity.CommentPosts;
 import top.shanbing.domain.entity.CommentSites;
 import top.shanbing.domain.entity.Comments;
@@ -37,21 +38,21 @@ public class CommentServiceImpl implements CommentService {
         CommentSites site = commentMapper.selectCommentSitesBySiteUrl(addReq.siteUrl);
         if(site == null){
             site = new CommentSites(addReq.siteUrl,1);
-            this.saveSite(site);
+            commentMapper.insertSite(site);
         }
         CommentUtil.isSiteBlack(site);
 
-        CommentPosts post = commentMapper.selectCommentPostsByPostUrl(addReq.postUrl);
+        CommentPosts post = commentMapper.selectCommentPostsByPostUrl(site.getId(),addReq.postUrl);
         if(post == null){
             post = new CommentPosts(site.getId(),addReq.postUrl);
-            this.savePost(post);
+            commentMapper.insertPost(post);
         }
 
         //todo addReq.parentId 检查父节点是否存在
         //todo beReplyId  检查是否存在
 
         Comments comment = new Comments(post.getId(),addReq.commentName,addReq.commentContacts,addReq.commentContent,1,ip,deviceType,addReq.parentId,addReq.beReplyId);
-        this.saveComment(comment);
+        commentMapper.insertComment(comment);
     }
 
     @Override
@@ -68,24 +69,6 @@ public class CommentServiceImpl implements CommentService {
 
         List<Comments> list = commentMapper.selectCommentList(req.siteUrl,req.postUrl,limit ,offset );
         return this.commentListVO(req.pageNum,req.pageSize,list);
-    }
-
-    private void saveSite(CommentSites site) {
-        site.setId(1);
-        log.info("保存站点:"+site.toString());
-        commentMapper.insertSite(site);
-    }
-
-    private void savePost(CommentPosts posts) {
-        posts.setId(2);
-        log.info("保存帖子:"+posts.toString());
-        commentMapper.insertPost(posts);
-    }
-
-    private void saveComment(Comments comment) {
-        comment.setId(3);
-        log.info("保存评论:"+comment.toString());
-        commentMapper.insertComment(comment);
     }
 
     private PageResult<CommentListRes> commentListVO(Integer pageSize,Integer pageNum,List<Comments> list){

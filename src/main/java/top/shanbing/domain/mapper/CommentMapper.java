@@ -14,7 +14,7 @@ import java.util.List;
 public interface CommentMapper {
 
     CommentSites selectCommentSitesBySiteUrl(@Param("siteUrl") String siteUrl);
-    CommentPosts selectCommentPostsByPostUrl(@Param("postUrl") String postUrl);
+    CommentPosts selectCommentPostsByPostUrl(@Param("siteId") int siteId,@Param("postUrl") String postUrl);
 
     Integer insertSite(CommentSites site);
     Integer insertPost(CommentPosts posts);

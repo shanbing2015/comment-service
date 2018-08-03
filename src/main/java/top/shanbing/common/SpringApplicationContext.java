@@ -22,10 +22,18 @@ public class SpringApplicationContext {
     @Value("${deploy.env}")
     private String env = "pro";
 
+    @Value("${pageSize}")
+    private int pageSize;
+
+    private SpringApplicationContext(){
+    }
+
     @PostConstruct
     public void init(){
         appEnvironment = env;
         logger.info("当前环境:"+appEnvironment);
+        // 分页配置
+        AppPage.pageSize = pageSize;
     }
 
 

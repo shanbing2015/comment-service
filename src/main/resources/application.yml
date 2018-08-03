@@ -17,5 +17,8 @@ mybatis:
     #cache-enabled: false
     #local-cache-scope: statement
 
+#分页大小
+pageSize: 20
+
 deploy:
   env: pro

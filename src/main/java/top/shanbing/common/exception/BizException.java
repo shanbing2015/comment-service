@@ -39,7 +39,7 @@ public class BizException extends RuntimeException {
 	public String toString() {
 		return "BizException{" +
 				"code=" + code +
-				", errorCodeEnum=" + errorCodeEnum.toString() +
+				", errorCodeEnum=" + (errorCodeEnum!=null ? errorCodeEnum.toString():"") +
 				", errorInfo='" + errorInfo + '\'' +
 				'}';
 	}

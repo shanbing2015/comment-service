@@ -29,7 +29,10 @@ public class GlobalExceptionHandler {
         if(e instanceof BizException ){
             BizException bizException = (BizException) e;
             logger.info(bizException.toString());
-            return ResultUtil.error(bizException.errorCodeEnum);
+            if(bizException.errorCodeEnum != null)
+                return ResultUtil.error(bizException.errorCodeEnum);
+            else
+                return ResultUtil.error(bizException.code,bizException.getMessage());
         }
 
         logger.info(e.getMessage());

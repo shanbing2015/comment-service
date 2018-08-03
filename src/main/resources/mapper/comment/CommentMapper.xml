@@ -33,7 +33,7 @@
     </select>
 
     <select id="selectCommentPostsByPostUrl" resultMap="postMap">
-        select id,site_id,post_url,createtime from comment_posts where post_url = #{postUrl}
+        select id,site_id,post_url,createtime from comment_posts where post_url = #{postUrl} and site_id = #{siteId}
     </select>
 
     <insert id="insertSite" useGeneratedKeys="true" keyProperty="id" parameterType="top.shanbing.domain.entity.CommentSites">
