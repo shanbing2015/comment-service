@@ -46,4 +46,11 @@ public enum ErrorCodeEnum {
         return msg;
     }
 
+    @Override
+    public String toString() {
+        return "ErrorCodeEnum{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }

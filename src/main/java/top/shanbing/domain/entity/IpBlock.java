@@ -5,7 +5,7 @@ import java.util.Date;
 public class IpBlock {
     private Integer id;
     private String ip;
-    private Date createDate;
+    private Date createtime;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class IpBlock {
         this.ip = ip;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

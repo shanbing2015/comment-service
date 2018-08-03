@@ -1,8 +1,11 @@
 package top.shanbing.util;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import top.shanbing.common.exception.GlobalExceptionHandler;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,9 +13,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class HttpUtil {
+    private static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     public static String getIp(ServerHttpRequest request){
-        String IP;
+        String ip;
         HttpHeaders httpHeaders = request.getHeaders();
 
         Set<Map.Entry<String, List<String>>> set  =  httpHeaders.entrySet();
@@ -21,24 +25,23 @@ public class HttpUtil {
             Map.Entry<String, List<String>> entry = iterator.next();
             String key = entry.getKey();
             List<String> list = entry.getValue();
-            System.out.println("\n-------key:"+key+"----------");
-            list.forEach(str -> System.out.println("value:"+str));
-            System.out.println("--------------");
+            logger.debug("\n-------key:"+key+"----------");
+            list.forEach(str -> logger.debug("value:"+str));
         }
-        System.out.println(deviceType(request));
+        logger.debug(deviceType(request));
 
         if(httpHeaders.containsKey("X-Forwarded-For")){
             List<String> list = httpHeaders.get("X-Forwarded-For");
-            list.forEach( ip -> System.out.println("代理IP:"+ip));
-            IP = list.get(0);
+            list.forEach( agentIp -> logger.debug("代理IP:"+agentIp));
+            ip = list.get(0);
         }else{
-            IP = request.getRemoteAddress().getAddress().getHostAddress();
+            ip = request.getRemoteAddress().getAddress().getHostAddress();
         }
 
         String userAgent = httpHeaders.get("User-Agent").get(0);
-        System.out.println("IP:"+IP+",请求设备来源:"+userAgent);
+        logger.info("IP:"+ip+",请求设备来源:"+userAgent);
 
-        return IP;
+        return ip;
     }
 
     public static String deviceType(ServerHttpRequest request){

@@ -13,31 +13,34 @@ public class BizException extends RuntimeException {
 	/**
 	 * 自定义的错误码
 	 */
-	private Integer code;
-
-	private ErrorCodeEnum errorCodeEnum;
+	public Integer code;
+	public ErrorCodeEnum errorCodeEnum;
+	public String errorInfo;
 
 	public BizException(ErrorCodeEnum errorCodeEnum) {
 		super(errorCodeEnum.getMsg());
 		this.code = errorCodeEnum.getCode();
 		this.errorCodeEnum = errorCodeEnum;
 	}
+	public BizException(ErrorCodeEnum errorCodeEnum,String errorInfo) {
+		super(errorCodeEnum.getMsg());
+		this.code = errorCodeEnum.getCode();
+		this.errorCodeEnum = errorCodeEnum;
+		this.errorInfo = errorInfo;
+	}
 
 	public BizException(int code, String msg){
 		super(msg);
-		this.code = code;
+		if(code == 0) code = 1;
+		else this.code = code;
 	}
 
-
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	public ErrorCodeEnum getErrorCodeEnum() {
-		return errorCodeEnum;
+	@Override
+	public String toString() {
+		return "BizException{" +
+				"code=" + code +
+				", errorCodeEnum=" + errorCodeEnum.toString() +
+				", errorInfo='" + errorInfo + '\'' +
+				'}';
 	}
 }
