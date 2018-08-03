@@ -38,7 +38,6 @@ public class CommentController {
         String ip = HttpUtil.getIp(request);
         String deviceType = HttpUtil.deviceType(request);
         log.info("请求IP:"+ip+",设备类型:"+deviceType+"\t[siteUrl:"+addReq.siteUrl+",postUrl:"+addReq.postUrl+",commentContent:"+addReq.commentContent+"]");
-        CommentUtil.isIpBlack(ip);
         commentService.save(addReq,ip,deviceType);
         return Mono.just(ResultUtil.success());
     }
@@ -49,7 +48,6 @@ public class CommentController {
         String ip = HttpUtil.getIp(request);
         String deviceType = HttpUtil.deviceType(request);
         log.info("请求IP:"+ip+",设备类型:"+deviceType+"\t[siteUrl:"+listReq.siteUrl+",postUrl:"+listReq.postUrl+"]");
-        CommentUtil.isIpBlack(ip);
         PageResult pageResult = commentService.getList(listReq);
         return Mono.just(ResultUtil.success(pageResult));
     }
