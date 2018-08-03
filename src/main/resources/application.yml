@@ -19,6 +19,8 @@ mybatis:
 
 #分页大小
 pageSize: 20
+#限流大小
+rateLimiter: 10
 
 deploy:
   env: pro

@@ -10,6 +10,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.shanbing.common.exception.GlobalExceptionHandler;
+import top.shanbing.common.webFlowRate.WepRateLimiter;
 import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.domain.model.result.ResultUtil;
 import top.shanbing.util.CommentUtil;
@@ -36,6 +37,7 @@ public class CommentWebFilter implements WebFilter {
         ServerHttpRequest request =  serverWebExchange.getRequest();
         ServerHttpResponse response =  serverWebExchange.getResponse();
 
+        WepRateLimiter.acquire();
         try {
             CommentUtil.isIpBlack(HttpUtil.getIp(request));
         }catch (Exception e){
