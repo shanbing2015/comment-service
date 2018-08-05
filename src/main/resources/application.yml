@@ -8,7 +8,7 @@ spring:
   mail:
     host: smtp.shanbing.top
     username: comment@shanbing.top
-    #password: Comment123456
+    password: Comment123456
 
 
 #mybatis相关配置
