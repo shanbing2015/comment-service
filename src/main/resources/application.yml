@@ -6,9 +6,24 @@ spring:
   application:
     name: comment-service
   mail:
-    host: smtp.shanbing.top
+    host: smtpdm.aliyun.com
     username: comment@shanbing.top
-    password: ENC(mxfEI/V31Cb3onD+khuu8FsPYPNgZHbE)
+    password: ENC(YKLU2RsxlxqK562aiA8OTpqI89jw6Hra)
+    default-encoding: utf-8
+    # 阿里云服务25端口禁用，采用ssl加465端口
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 25000
+          ssl.enable: true
+          socketFactory.class: javax.net.ssl.SSLSocketFactory
+          starttls.enable: true
+          socketFactory.port: 465　
+          port: 465
+
+
+
 
 
 #mybatis相关配置
