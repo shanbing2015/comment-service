@@ -5,6 +5,10 @@ spring:
     active: dev   #spring.profiles.active jar启动配置里更改环境
   application:
     name: comment-service
+  mail:
+    host: smtp.shanbing.top
+    username: comment@shanbing.top
+    password: Comment123456
 
 
 #mybatis相关配置
@@ -21,6 +25,8 @@ mybatis:
 pageSize: 20
 #限流大小
 rateLimiter: 10
+#收件人
+toMail: shan.bing@foxmail.com
 
 deploy:
   env: pro

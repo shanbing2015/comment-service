@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.shanbing.common.AppPage;
-import top.shanbing.common.exception.BizException;
 import top.shanbing.domain.entity.CommentPosts;
 import top.shanbing.domain.entity.CommentSites;
 import top.shanbing.domain.entity.Comments;
@@ -16,6 +15,7 @@ import top.shanbing.domain.model.comment.CommentListReq;
 import top.shanbing.domain.model.comment.CommentListRes;
 import top.shanbing.domain.model.comment.ReplyComment;
 import top.shanbing.domain.model.result.PageResult;
+import top.shanbing.sdk.mail.MailUtil;
 import top.shanbing.service.CommentService;
 import top.shanbing.util.CommentUtil;
 
@@ -53,6 +53,11 @@ public class CommentServiceImpl implements CommentService {
 
         Comments comment = new Comments(post.getId(),addReq.commentName,addReq.commentContacts,addReq.commentContent,1,ip,deviceType,addReq.parentId,addReq.beReplyId);
         commentMapper.insertComment(comment);
+
+        String notifyText = "评论者:"+comment.getCommentName();
+        notifyText += "\n评论内容:"+comment.getCommentContent();
+        notifyText += "\n\nIP:"+comment.getIp()+",来源:"+comment.getDeviceType();
+        MailUtil.sendCommentNotify(notifyText);
     }
 
     @Override
