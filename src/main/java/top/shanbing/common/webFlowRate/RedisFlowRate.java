@@ -13,6 +13,8 @@ import top.shanbing.common.redis.RedisKeys;
 import top.shanbing.domain.enums.ErrorCodeEnum;
 import top.shanbing.service.BlockService;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author shanbing
  * @date 2018/8/6.
@@ -24,19 +26,24 @@ public class RedisFlowRate {
     protected static Logger logger = LoggerFactory.getLogger(RedisFlowRate.class);
     @Autowired
     private IRedisManager redisManager;
-
     @Autowired
     private BlockService blockService;
 
-    @Value("${IpRateLimiter}")
+    @Value("${ipRateLimiter}")
     private Long ipRateLimiter;
+    @Value("${ipRateLimiterecond}")
+    private Long ipRateLimiterecond;    //秒
+
+    @PostConstruct
+    private void init(){
+        logger.info("RedisFlowRate限流已初始化，单个ip/{}s不超过{}个任务被提交",ipRateLimiterecond,ipRateLimiter);
+    }
 
     public void acquire(String ip){
-        long s = 1;//每秒
         String key = String.format(RedisKeys.IP_FLOW_RATE,ip);
-        long count = redisManager.incr(key,s);
+        long count = redisManager.incr(key,ipRateLimiterecond);
         if(count>ipRateLimiter){
-            logger.info("ip:{},{}/{}s",ip,count,s);
+            logger.info("ip:{},{}/{}s",ip,count,ipRateLimiterecond);
             ipMonitor(ip,count);
             throw new BizException(ErrorCodeEnum.IP_FLOW_RATE);
         }

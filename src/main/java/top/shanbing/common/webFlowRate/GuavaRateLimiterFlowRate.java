@@ -5,8 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import top.shanbing.common.exception.BizException;
+import top.shanbing.domain.enums.ErrorCodeEnum;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shanbing
@@ -18,22 +21,24 @@ import javax.annotation.PostConstruct;
 public class GuavaRateLimiterFlowRate {
     private static Logger logger = LoggerFactory.getLogger(GuavaRateLimiterFlowRate.class);
 
-    private static RateLimiter limiter = null;
-
     @Value("${rateLimiter}")
     private int rateLimiter;
 
-    private GuavaRateLimiterFlowRate(){
-    }
+    private  RateLimiter limiter;
 
     @PostConstruct
-    public void init(){
-        this.limiter = RateLimiter.create(rateLimiter);
+    private void init(){
+        limiter = RateLimiter.create(rateLimiter);
         logger.info("RateLimiter限流已初始化，每秒不超过{}个任务被提交",rateLimiter);
     }
 
-    public static void acquire(){
+    public void acquire(){
         limiter.acquire(); // 请求RateLimiter, 超过permits会被阻塞
     }
 
+    public void tryAcquire(){
+        if(!limiter.tryAcquire(3,TimeUnit.SECONDS)){
+            throw new BizException(ErrorCodeEnum.API_FLOW_RATE);
+        }
+    }
 }

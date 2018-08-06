@@ -13,6 +13,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.shanbing.common.exception.GlobalExceptionHandler;
+import top.shanbing.common.webFlowRate.GuavaRateLimiterFlowRate;
 import top.shanbing.common.webFlowRate.RedisFlowRate;
 import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.util.HttpUtil;
@@ -23,7 +24,7 @@ import top.shanbing.util.HttpUtil;
  * 接口限流filter
  */
 @Component
-@Order(2)
+@Order(1)
 public class FlowRateFilter  implements WebFilter {
     protected static Logger logger = LoggerFactory.getLogger(FlowRateFilter.class);
 
@@ -32,6 +33,8 @@ public class FlowRateFilter  implements WebFilter {
 
     @Autowired
     private RedisFlowRate redisFlowRate;
+    @Autowired
+    private GuavaRateLimiterFlowRate limiterFlowRate;
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
@@ -40,6 +43,7 @@ public class FlowRateFilter  implements WebFilter {
         ServerHttpResponse response =  serverWebExchange.getResponse();
 
         try {
+            limiterFlowRate.tryAcquire();
             String ip = HttpUtil.getIp(request);
             redisFlowRate.acquire(ip);
         }catch (Exception e){

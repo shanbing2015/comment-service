@@ -44,6 +44,7 @@
 2018.08.04  新增redis
 2018.08.05  新增mail通知新的评论
 2018.08.06  新增jasypt加密（待验证安全问题）
+2018.08.07  新增接口限流和ip限流（GuaveRateLimiter 和 Redis）
             
 
 [1]: https://www.shanbing.top/2018/07/26/%E8%87%AA%E5%B7%B1%E5%8A%A8%E6%89%8B%E7%BC%96%E5%86%99jekyll%E8%AF%84%E8%AE%BA%E6%8F%92%E4%BB%B6.html#%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8
