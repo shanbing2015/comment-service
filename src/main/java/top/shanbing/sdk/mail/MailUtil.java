@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import top.shanbing.common.SpringApplicationContext;
 
 import javax.annotation.PostConstruct;
 
@@ -38,7 +39,11 @@ public class MailUtil {
     /**评论邮件通知*/
     public static void sendCommentNotify(String text){
        try {
-           mailService.sendMail(from,toMail,"【shanbing.top】新的评论通知",text);
+           if(SpringApplicationContext.isProd()){
+               mailService.sendMail(from,toMail,"【shanbing.top】新的评论通知",text);
+           }else{
+               logger.info("非正式环境，不进行邮件通知");
+           }
        }catch (Exception e){
            logger.error("评论邮件通知错误",e);
        }

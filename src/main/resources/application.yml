@@ -8,7 +8,7 @@ spring:
   mail:
     host: smtp.shanbing.top
     username: comment@shanbing.top
-    password: Comment123456
+    password: ENC(mxfEI/V31Cb3onD+khuu8FsPYPNgZHbE)
 
 
 #mybatis相关配置
@@ -21,6 +21,9 @@ mybatis:
     #cache-enabled: false
     #local-cache-scope: statement
 
+jasypt:
+  encryptor:
+    password: shanbing.top#shanbing.top@shanbing.top
 #分页大小
 pageSize: 20
 #限流大小
