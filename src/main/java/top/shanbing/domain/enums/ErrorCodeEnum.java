@@ -14,6 +14,7 @@ public enum ErrorCodeEnum {
     PARAM_VALID_ERROR(11, "参数校验错误"),
     SITE_BLACK_ERROR(21, "站点是黑名单"),
     IP_BLACK_ERROR(22, "ip是黑名单"),
+    IP_FLOW_RATE(23, "ip限流"),
 
     // <0 系统异常
     ERROR(-1, "系统错误"),

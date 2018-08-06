@@ -1,7 +1,10 @@
 package top.shanbing.common.filter;
 
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -10,36 +13,35 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.shanbing.common.exception.GlobalExceptionHandler;
-import top.shanbing.common.webFlowRate.WepRateLimiter;
+import top.shanbing.common.webFlowRate.RedisFlowRate;
 import top.shanbing.domain.model.result.JsonResult;
-import top.shanbing.domain.model.result.ResultUtil;
-import top.shanbing.util.CommentUtil;
 import top.shanbing.util.HttpUtil;
 
 /**
  * @author shanbing
- * @date 2018/8/3.
+ * @date 2018/8/6.
+ * 接口限流filter
  */
-
 @Component
-public class CommentWebFilter implements WebFilter {
+@Order(2)
+public class FlowRateFilter  implements WebFilter {
+    protected static Logger logger = LoggerFactory.getLogger(FlowRateFilter.class);
 
     @Autowired
     private GlobalExceptionHandler handler;
-    /**
-     *
-     * @param serverWebExchange:用请求换回响应. 包含有成对的http请求对象ServerHttpRequest和http响应对象ServerHttpResponse.
-     * @param webFilterChain
-     * @return
-     */
+
+    @Autowired
+    private RedisFlowRate redisFlowRate;
+
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
+        logger.info("FlowRateFilter");
         ServerHttpRequest request =  serverWebExchange.getRequest();
         ServerHttpResponse response =  serverWebExchange.getResponse();
 
-        WepRateLimiter.acquire();
         try {
-            CommentUtil.isIpBlack(HttpUtil.getIp(request));
+            String ip = HttpUtil.getIp(request);
+            redisFlowRate.acquire(ip);
         }catch (Exception e){
             JsonResult jsonResult = handler.handler(e);
             String resultJson = JSONObject.toJSONString(jsonResult);

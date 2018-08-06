@@ -50,3 +50,7 @@ logging:
 
 deploy:
   env: pro
+
+#限流大小
+rateLimiter: 10
+IpRateLimiter: 5    #5/s

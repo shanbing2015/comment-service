@@ -16,4 +16,19 @@ public class BlockServiceImpl implements BlockService {
     public IpBlock getIpBlockById(String ip) {
         return blockMapping.selectIpBlockByIp(ip);
     }
+
+    @Override
+    public void addIpBlock(String ip) {
+        // todo
+    }
+
+    @Override
+    public void addIpBlockTemp(String ip) {
+        // todo
+    }
+
+    @Override
+    public void addIpBlockTemp(String ip, int minute) {
+        // todo
+    }
 }

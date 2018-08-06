@@ -12,18 +12,18 @@ import javax.annotation.PostConstruct;
  * @author shanbing
  * @date 2018/8/3.
  * web接口限流
- *  采用guava的RateLimiter,类似令牌桶算法
+ *  采用guava的RateLimiter,类似令牌桶算法，未获取到令牌阻塞
  */
 @Component
-public class WepRateLimiter {
-    private static Logger logger = LoggerFactory.getLogger(WepRateLimiter.class);
+public class GuavaRateLimiterFlowRate {
+    private static Logger logger = LoggerFactory.getLogger(GuavaRateLimiterFlowRate.class);
 
     private static RateLimiter limiter = null;
 
     @Value("${rateLimiter}")
     private int rateLimiter;
 
-    private WepRateLimiter(){
+    private GuavaRateLimiterFlowRate(){
     }
 
     @PostConstruct

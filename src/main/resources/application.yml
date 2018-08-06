@@ -41,8 +41,7 @@ jasypt:
     password: shanbing.top#shanbing.top@shanbing.top
 #分页大小
 pageSize: 20
-#限流大小
-rateLimiter: 10
+
 #收件人
 toMail: shan.bing@foxmail.com
 

@@ -141,4 +141,19 @@ public class RedisManager implements IRedisManager{
     <T> void asyncSetex(String key, int ttl, T data) {
         setex(key, ttl, data);
     }
+
+    @Override
+    public Long incr(String key,long tt) {
+        RedisConnection redisConnection = redisConnectionFactory.getConnection();
+        try {
+            Long count = redisConnection.incr(key.getBytes(CHARSET));
+            redisConnection.expire(key.getBytes(CHARSET),tt);
+            return count;
+        }catch (Exception e){
+            logger.error("数据存入redis错误", e);
+        }finally {
+            redisConnection.close();
+        }
+        return 0L;
+    }
 }
