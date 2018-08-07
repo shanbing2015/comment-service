@@ -24,7 +24,7 @@ import top.shanbing.util.HttpUtil;
  * 接口限流filter
  */
 @Component
-@Order(1)
+@Order(2)
 public class FlowRateFilter  implements WebFilter {
     protected static Logger logger = LoggerFactory.getLogger(FlowRateFilter.class);
 

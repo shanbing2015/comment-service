@@ -24,7 +24,7 @@ import top.shanbing.util.HttpUtil;
  */
 
 @Component
-@Order(2)
+@Order(1)
 public class IpWebFilter implements WebFilter {
     protected static Logger logger = LoggerFactory.getLogger(IpWebFilter.class);
 
