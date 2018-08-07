@@ -1,6 +1,8 @@
 package top.shanbing.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import top.shanbing.common.redis.IRedisManager;
 import top.shanbing.common.redis.RedisKeys;
@@ -12,6 +14,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
+@EnableAsync
 @Service
 public class BlockServiceImpl implements BlockService {
 
@@ -46,6 +50,15 @@ public class BlockServiceImpl implements BlockService {
             redisManager.incr(key,minute*60);
         }else {
             redisManager.incr(key,null);
+        }
+    }
+
+    @Async
+    @Override
+    public void queryIpBlock(String ip) {
+        IpBlock ipBlock = this.getIpBlockById(ip);
+        if(ipBlock != null && ipBlock.getIp() != null){
+            this.addIpBlock(ipBlock.getIp());
         }
     }
 }

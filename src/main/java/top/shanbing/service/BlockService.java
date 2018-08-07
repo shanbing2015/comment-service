@@ -6,6 +6,9 @@ public interface BlockService {
 
     IpBlock getIpBlockById(String ip);
 
+    /**查询DB是否IP黑名单，并加入Redis*/
+    void queryIpBlock(String ip);
+
 
     /**加入临时黑名单,minute 分钟 null 不过期*/
     void addIpBlock(String ip,Long minute );
