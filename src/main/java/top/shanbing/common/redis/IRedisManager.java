@@ -30,5 +30,5 @@ public interface IRedisManager {
     /**删除redis*/
     Long delete(String key);
 
-    Long incr(String key,long tt);
+    Long incr(String key,Long tt);
 }

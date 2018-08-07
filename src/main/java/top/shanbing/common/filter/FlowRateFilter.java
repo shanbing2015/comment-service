@@ -43,9 +43,12 @@ public class FlowRateFilter  implements WebFilter {
         ServerHttpResponse response =  serverWebExchange.getResponse();
 
         try {
-            limiterFlowRate.tryAcquire();
+            /***
+             *  先IP限流，再进行接口总限流
+             */
             String ip = HttpUtil.getIp(request);
             redisFlowRate.acquire(ip);
+            limiterFlowRate.tryAcquire();
         }catch (Exception e){
             JsonResult jsonResult = handler.handler(e);
             String resultJson = JSONObject.toJSONString(jsonResult);

@@ -55,14 +55,14 @@ public class RedisFlowRate {
         int i = (int)(count/ipRateLimiter);
         switch (i){
             case 1:{
-                blockService.addIpBlockTemp(ip,60); //1小时
+                blockService.addIpBlock(ip,60L); //1小时
                 break;
             }
             case 2:
             case 3:
             case 4:
             case 5:{
-                blockService.addIpBlockTemp(ip);
+                blockService.addIpBlockDay(ip);
                 break;
             }
             default:{

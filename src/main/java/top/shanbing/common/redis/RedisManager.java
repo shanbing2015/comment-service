@@ -143,11 +143,13 @@ public class RedisManager implements IRedisManager{
     }
 
     @Override
-    public Long incr(String key,long tt) {
+    public Long incr(String key,Long tt) {
         RedisConnection redisConnection = redisConnectionFactory.getConnection();
         try {
             Long count = redisConnection.incr(key.getBytes(CHARSET));
-            redisConnection.expire(key.getBytes(CHARSET),tt);
+            if(tt != null){
+                redisConnection.expire(key.getBytes(CHARSET),tt);
+            }
             return count;
         }catch (Exception e){
             logger.error("数据存入redis错误", e);
