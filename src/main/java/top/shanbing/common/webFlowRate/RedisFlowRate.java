@@ -53,6 +53,7 @@ public class RedisFlowRate {
     @Async
     void ipMonitor(String ip,long count){
         int i = (int)(count/ipRateLimiter);
+        logger.info("ip:"+ip+",超过限定流量比例:"+i);
         switch (i){
             case 1:{
                 blockService.addIpBlock(ip,60L); //1小时
