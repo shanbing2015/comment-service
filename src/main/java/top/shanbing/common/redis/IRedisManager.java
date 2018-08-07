@@ -31,4 +31,6 @@ public interface IRedisManager {
     Long delete(String key);
 
     Long incr(String key,Long tt);
+
+    Long pttl(String key);
 }

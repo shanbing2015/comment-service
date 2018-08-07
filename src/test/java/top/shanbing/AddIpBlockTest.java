@@ -16,6 +16,7 @@ public class AddIpBlockTest extends BaseTest{
     @Test
     public void addIpBlockTest(){
         String ip = "192.168.1.2";
-        service.addIpBlock(ip,1L);
+        service.addIpBlock(ip,-2L);
+        //service.addIpBlock(ip,-2L);
     }
 }

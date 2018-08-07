@@ -158,4 +158,18 @@ public class RedisManager implements IRedisManager{
         }
         return 0L;
     }
+
+    @Override
+    public Long pttl(String key) {
+        RedisConnection redisConnection = redisConnectionFactory.getConnection();
+        try {
+            Long tt = redisConnection.pTtl(key.getBytes(CHARSET));
+            return tt;
+        }catch (Exception e){
+            logger.error("数据存入redis错误", e);
+        }finally {
+            redisConnection.close();
+        }
+        return 0L;
+    }
 }

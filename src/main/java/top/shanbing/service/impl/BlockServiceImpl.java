@@ -31,26 +31,38 @@ public class BlockServiceImpl implements BlockService {
     }
 
     @Override
-    public void addIpBlock(String ip) {
-        addIpBlock(ip,null);
+    public Long addIpBlock(String ip) {
+        return addIpBlock(ip,null);
     }
 
     @Override
-    public void addIpBlockDay(String ip) {
+    public Long addIpBlockDay(String ip) {
         LocalDateTime nowTime = LocalDateTime.now();
         LocalDateTime today_end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);//当天零点
         Duration duration = java.time.Duration.between(nowTime,today_end);
-        this.addIpBlock(ip,duration.toMinutes());
+        return this.addIpBlock(ip,duration.toMinutes());
     }
 
     @Override
-    public void addIpBlock(String ip, Long minute) {
+    public Long addIpBlock(String ip, Long minute) {
         String key = String.format(RedisKeys.IP_BLOCK,ip);
-        if(minute != null){
-            redisManager.incr(key,minute*60);
-        }else {
+
+        Long tt = redisManager.pttl(key);
+        System.out.println("当前过期时间(毫秒):"+tt);
+        if(tt == -1){
             redisManager.incr(key,null);
+            return -1L;
         }
+        if(minute == null){
+            if(tt >= 0) redisManager.delete(key);
+            redisManager.incr(key,null);
+            return -1L;
+        }
+        if(tt < minute*60*1000) {
+            redisManager.incr(key,minute * 60);
+            return minute;
+        }
+        return tt/1000/60;
     }
 
     @Async

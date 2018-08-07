@@ -38,7 +38,10 @@ public final class ResultUtil {
 		return success(ErrorCodeEnum.ERROR.getCode(),ErrorCodeEnum.ERROR.getMsg(),data);
 	}
 	public static JsonResult<?> error(ErrorCodeEnum errorCodeEnum){
-		return success(errorCodeEnum.getCode(),errorCodeEnum.getMsg());
+		return error(errorCodeEnum,null);
+	}
+	public static JsonResult<?> error(ErrorCodeEnum errorCodeEnum,String errorInfo){
+		return success(errorCodeEnum.getCode(),errorCodeEnum.getMsg()+(errorInfo!=null?":"+errorInfo:""));
 	}
 
 	public static JsonResult error(Integer errcode, String errmsg) {

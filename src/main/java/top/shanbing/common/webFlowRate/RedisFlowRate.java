@@ -54,21 +54,34 @@ public class RedisFlowRate {
     void ipMonitor(String ip,long count){
         int i = (int)(count/ipRateLimiter);
         logger.info("ip:"+ip+",超过限定流量比例:"+i);
+        Long tt = -1L;
         switch (i){
             case 1:{
-                blockService.addIpBlock(ip,60L); //1小时
+                tt = blockService.addIpBlock(ip,1L); //1分钟
                 break;
             }
-            case 2:
-            case 3:
-            case 4:
+            case 2:{
+                tt = blockService.addIpBlock(ip,10L);
+                break;
+            }
+            case 3:{
+                tt = blockService.addIpBlock(ip,30L);
+                break;
+            }
+            case 4:{
+                tt = blockService.addIpBlock(ip,60L);
+                break;
+            }
             case 5:{
-                blockService.addIpBlockDay(ip);
+                tt = blockService.addIpBlockDay(ip);
                 break;
             }
             default:{
                 blockService.addIpBlock(ip);
+                break;
             }
         }
+        throw new BizException(ErrorCodeEnum.IP_FLOW_RATE,String.valueOf(tt)+"分钟内禁止调用");
     }
+
 }
