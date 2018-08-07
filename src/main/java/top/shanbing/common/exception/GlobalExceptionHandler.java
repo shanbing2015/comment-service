@@ -15,6 +15,7 @@ import top.shanbing.domain.model.result.ResultUtil;
 
 /**
  * 全局Controller 层处理异常拦截类
+ *  通过调用可使其它层异常也用此类来处理
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
