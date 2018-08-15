@@ -72,7 +72,7 @@ public class IdentityFilter implements WebFilter {
         }
         if(identity == null){
             // 创建身份
-            String value = RedisKeys.USER_IDENTIY+MD5.md5(Long.toString(new Date().getTime()));
+            String value = MD5.md5(Long.toString(new Date().getTime()));
             ResponseCookie.ResponseCookieBuilder cookieBuilder = ResponseCookie.from(key,value);
             if(domain != null){
                 domain = domain.substring(domain.indexOf("."));
@@ -88,7 +88,7 @@ public class IdentityFilter implements WebFilter {
             response.addCookie(cookie);
             // 身份redis缓存
             users.put(value,new Object());
-            redisManager.setex(value,tt,new Object(),false);
+            redisManager.setex(RedisKeys.USER_IDENTIY+value,tt,new Object(),false);
             System.out.println("创建身份："+ value);
         }
         return webFilterChain.filter(serverWebExchange);
