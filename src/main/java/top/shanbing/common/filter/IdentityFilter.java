@@ -63,7 +63,14 @@ public class IdentityFilter implements WebFilter {
         if(identity == null){
             // 创建身份
             String value = MD5.md5(Long.toString(new Date().getTime()));
-            ResponseCookie cookie = ResponseCookie.from(key,value).build();
+            ResponseCookie.ResponseCookieBuilder cookieBuilder = ResponseCookie.from(key,value);
+            //cookieBuilder.domain(".shanbing.top");
+            cookieBuilder.maxAge(tt);
+            //cookieBuilder.httpOnly();
+            //cookieBuilder.secure();
+            cookieBuilder.path("/");
+            ResponseCookie cookie = cookieBuilder.build();
+            System.out.println("domain:"+cookie.getDomain());
             response.addCookie(cookie);
             // 身份redis缓存
             users.put(value,new Object());
