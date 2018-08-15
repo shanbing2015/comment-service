@@ -14,6 +14,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import top.shanbing.common.redis.IRedisManager;
+import top.shanbing.common.redis.RedisKeys;
 import top.shanbing.util.MD5;
 
 import java.util.*;
@@ -63,7 +64,7 @@ public class IdentityFilter implements WebFilter {
             // todo 本地缓存+redis缓存
             identity = users.get(value);
             if(identity == null){
-                identity = redisManager.get(value,Object.class);
+                identity = redisManager.get(RedisKeys.USER_IDENTIY+value,Object.class);
                 if(identity != null){
                     users.put(value,new Object());
                 }
@@ -71,7 +72,7 @@ public class IdentityFilter implements WebFilter {
         }
         if(identity == null){
             // 创建身份
-            String value = MD5.md5(Long.toString(new Date().getTime()));
+            String value = RedisKeys.USER_IDENTIY+MD5.md5(Long.toString(new Date().getTime()));
             ResponseCookie.ResponseCookieBuilder cookieBuilder = ResponseCookie.from(key,value);
             if(domain != null){
                 domain = domain.substring(domain.indexOf("."));

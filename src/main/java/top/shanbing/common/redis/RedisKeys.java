@@ -11,4 +11,6 @@ public interface RedisKeys {
     String IP_FLOW_RATE = "ip:flow:rete:%s";
 
     String IP_BLOCK = "ip:block:%s";
+
+    String USER_IDENTIY = "user:identiy:%s";
 }
