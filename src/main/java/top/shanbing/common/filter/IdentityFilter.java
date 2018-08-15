@@ -3,6 +3,7 @@ package top.shanbing.common.filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpCookie;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -15,9 +16,7 @@ import reactor.core.publisher.Mono;
 import top.shanbing.common.redis.IRedisManager;
 import top.shanbing.util.MD5;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -41,6 +40,18 @@ public class IdentityFilter implements WebFilter {
         ServerHttpRequest request =  serverWebExchange.getRequest();
         ServerHttpResponse response =  serverWebExchange.getResponse();
 
+        String domain = null;
+        HttpHeaders httpHeaders = request.getHeaders();
+        Set<Map.Entry<String, List<String>>> set  =  httpHeaders.entrySet();
+        Iterator<Map.Entry<String, List<String>>> iterator = set.iterator();
+        while(iterator.hasNext()){
+            Map.Entry<String, List<String>> entry = iterator.next();
+            String key = entry.getKey();
+            if(key.equals("Origin")){
+                domain = entry.getValue().get(0);
+            }
+        }
+
         MultiValueMap<String, HttpCookie> cookies =  request.getCookies();
         List<HttpCookie> list = cookies.get(key);
         Object identity = null;
@@ -62,7 +73,11 @@ public class IdentityFilter implements WebFilter {
             // 创建身份
             String value = MD5.md5(Long.toString(new Date().getTime()));
             ResponseCookie.ResponseCookieBuilder cookieBuilder = ResponseCookie.from(key,value);
-            //cookieBuilder.domain(".shanbing.top");
+            if(domain != null){
+                domain = domain.substring(domain.indexOf("//")+2);
+                System.out.println("domain:"+domain);
+                cookieBuilder.domain(domain);
+            }
             cookieBuilder.maxAge(tt);
             //cookieBuilder.httpOnly();
             //cookieBuilder.secure();
