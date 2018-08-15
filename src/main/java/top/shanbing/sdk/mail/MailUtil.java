@@ -37,10 +37,10 @@ public class MailUtil {
     }
 
     /**评论邮件通知*/
-    public static void sendCommentNotify(String text){
+    public static void sendCommentNotify(String title,String text){
        try {
            if(SpringApplicationContext.isProd()){
-               mailService.sendMail(from,toMail,"【shanbing.top】新的评论通知",text);
+               mailService.sendMail(from,toMail,"【新的评论】"+title,text);
            }else{
                logger.info("非正式环境，不进行邮件通知");
            }

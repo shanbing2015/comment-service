@@ -9,6 +9,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by shanbing.top on 2018/8/5.
  */
@@ -30,7 +32,6 @@ public class MailService {
         message.setSubject(subject);
         message.setText(text);
         javaMailSender.send(message);
-        Thread.sleep(10000);
-        log.info("发送邮件成功:"+message.getTo());
+        log.info("发送邮件成功【from:{},toMail:{},subject:{},text:{}】{}",from,toMail,subject,text,LocalDateTime.now().toString());
     }
 }
