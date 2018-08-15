@@ -74,7 +74,7 @@ public class IdentityFilter implements WebFilter {
             String value = MD5.md5(Long.toString(new Date().getTime()));
             ResponseCookie.ResponseCookieBuilder cookieBuilder = ResponseCookie.from(key,value);
             if(domain != null){
-                domain = domain.substring(domain.indexOf("//")+2);
+                domain = domain.substring(domain.indexOf("."));
                 System.out.println("domain:"+domain);
                 cookieBuilder.domain(domain);
             }
