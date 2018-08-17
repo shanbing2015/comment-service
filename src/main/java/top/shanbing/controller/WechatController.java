@@ -51,30 +51,30 @@ public class WechatController {
     @ResponseBody
     public Mono<JsonResult> isLogin(){
         Map<String,Object> resultMap = new HashMap<>();
-        resultMap.put("isLogin",0);
-        resultMap.put("msg","微信未登录");
+        boolean login = wechatService.isLogin();
+        resultMap.put("isLogin",login);
         return Mono.just(ResultUtil.success(resultMap));
     }
 
     @GetMapping("QRCode")
     public Mono<Void> getQRCode(ServerHttpResponse response){
         ZeroCopyHttpOutputMessage zeroCopyResponse = (ZeroCopyHttpOutputMessage) response;
-        response.getHeaders().add("Content-Type","image/jpeg");
-        response.getHeaders().setContentType(MediaType.IMAGE_PNG);
         String fileQRCodePath = wechatService.getQRCode();
         log.info("QRCode图片路径:{}",fileQRCodePath);
         File file = new File(fileQRCodePath);
+        response.getHeaders().add("Content-Type","image/jpeg");
+        response.getHeaders().setContentType(MediaType.IMAGE_PNG);
         return zeroCopyResponse.writeWith(file, 0, file.length());
     }
 
     @GetMapping("QRCode/download")
     public Mono<Void> downloadQRCode(ServerHttpResponse response){
         ZeroCopyHttpOutputMessage zeroCopyResponse = (ZeroCopyHttpOutputMessage) response;
-        response.getHeaders().set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=QRCode.JPG");
-        response.getHeaders().setContentType(MediaType.IMAGE_PNG);
         String cacheQRCodePath = wechatService.getCacheQRCodePath();
         log.info("QRCode图片路径:{}",cacheQRCodePath);
         File file = new File(cacheQRCodePath);
+        response.getHeaders().set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=QRCode.JPG");
+        response.getHeaders().setContentType(MediaType.IMAGE_PNG);
         return zeroCopyResponse.writeWith(file, 0, file.length());
     }
 
@@ -98,7 +98,13 @@ public class WechatController {
     }
 
     @GetMapping()
-    public void wechat(ServerHttpResponse response){
+    public Object wechat(ServerHttpResponse response){
+        boolean login = wechatService.isLogin();
+        if(!login){
+            return this.getQRCode(response);
+        }else{
+            return Mono.just(ResultUtil.success("已登录"));
+        }
 
     }
 }

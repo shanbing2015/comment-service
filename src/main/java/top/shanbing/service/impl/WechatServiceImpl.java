@@ -30,7 +30,7 @@ public class WechatServiceImpl implements WechatService {
     }
 
     @Override
-    public String getQRCode() {
+    public String getQRCode(){
         String filePath = this.getCacheQRCodePath();
         if(filePath == null || filePath.trim().equals("") || !new File(filePath).exists()){
             log.info("未获取到有效二维码路径,path:{}",filePath);
@@ -55,6 +55,15 @@ public class WechatServiceImpl implements WechatService {
 
     @Override
     public boolean notifyPythonGenerateQRCode() {
+        //todo 通知未实现
         return true;
+    }
+
+    @Override
+    public boolean isLogin() {
+        String wechatName = redisManager.get(RedisKeys.WECHAT_LOGIN,String.class);
+        boolean wechatLogin = wechatName!=null;
+        log.info("微信心跳：{},当前用户：{}",wechatLogin,wechatName);
+        return wechatLogin;
     }
 }

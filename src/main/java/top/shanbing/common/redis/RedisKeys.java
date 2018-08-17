@@ -16,5 +16,8 @@ public interface RedisKeys {
     /**用户cache*/
     String USER_IDENTIY = "user:identiy:%s";
 
+    /**微信登录二维码图片路径*/
     String WECHAT_QRCODE_PATH = "wechat_qrcode_path";
+
+    String WECHAT_LOGIN = "wechat_login";
 }

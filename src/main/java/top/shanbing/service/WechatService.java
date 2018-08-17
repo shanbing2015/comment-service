@@ -6,6 +6,8 @@ package top.shanbing.service;
  */
 public interface WechatService {
 
+    /**是否登录*/
+    boolean isLogin();
 
     /**将二维码路径缓存redis*/
     void cacheQRCodePath(String path);
