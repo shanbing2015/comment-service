@@ -53,6 +53,6 @@ deploy:
   env: dev
 
 #限流大小
-rateLimiter: 10     #总请求数10/s
-ipRateLimiter: 1    #IP1
+rateLimiter: 100    #总请求数10/s
+ipRateLimiter: 10    #IP1
 ipRateLimiterecond: 1 #秒

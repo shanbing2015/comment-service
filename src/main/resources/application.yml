@@ -45,7 +45,5 @@ pageSize: 20
 #收件人
 toMail: shan.bing@foxmail.com
 
-QRCodeImgPath: qrcode
-
 deploy:
   env: pro

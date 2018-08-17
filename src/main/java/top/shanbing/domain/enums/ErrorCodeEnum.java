@@ -22,6 +22,10 @@ public enum ErrorCodeEnum {
     BUSY_ERROR(-2, "系统繁忙"),
     UNKNOWN_ERROR(-11, "未知错误"),
 
+    PYTHON_ERROR(-3,"python错误"),
+
+    FILE_ERROR(-4,"文件操作错误");
+
 
     ;
 

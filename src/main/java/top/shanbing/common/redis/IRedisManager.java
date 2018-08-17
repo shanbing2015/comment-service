@@ -8,7 +8,7 @@ public interface IRedisManager {
     /**
      * * 将对象缓存到redis
      * * @param key key
-     * * @param ttl 过期时间
+     * * @param ttl 过期时间(s)
      * * @param data 要缓存的对象
      * * @param sync 是否同步处理，true=同步处理,false=非同步处理(异步,注意不要修改对象data)
      */
