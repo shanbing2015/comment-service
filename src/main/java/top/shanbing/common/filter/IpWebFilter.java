@@ -17,6 +17,12 @@ import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.util.CommentUtil;
 import top.shanbing.util.HttpUtil;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author shanbing
  * @date 2018/8/3.
@@ -24,12 +30,22 @@ import top.shanbing.util.HttpUtil;
  */
 
 @Component
-@Order(2)
+@Order(1)
 public class IpWebFilter implements WebFilter {
     protected static Logger logger = LoggerFactory.getLogger(IpWebFilter.class);
 
+    private Set<String> urlSet = new HashSet<>();
     @Autowired
     private GlobalExceptionHandler handler;
+
+    @PostConstruct
+    private void init(){
+        // todo 可采用 注解标识需要限流的接口，这里再通过注解 初始化所有url 存放在list中
+        urlSet.add("comment/v1/save");
+        urlSet.add("comment/v1/list");
+        logger.info("IP限流接口:"+urlSet.toString());
+    }
+
     /**
      *
      * @param serverWebExchange:用请求换回响应. 包含有成对的http请求对象ServerHttpRequest和http响应对象ServerHttpResponse.
@@ -41,6 +57,10 @@ public class IpWebFilter implements WebFilter {
         logger.info("CommentWebFilter");
         ServerHttpRequest request =  serverWebExchange.getRequest();
         ServerHttpResponse response =  serverWebExchange.getResponse();
+        String urlPath = request.getURI().getPath();
+        if(!urlSet.contains(urlPath)){
+            return webFilterChain.filter(serverWebExchange);
+        }
         try {
             CommentUtil.isIpBlack(HttpUtil.getIp(request));
         }catch (Exception e){

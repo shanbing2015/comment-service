@@ -45,5 +45,8 @@ pageSize: 20
 #收件人
 toMail: shan.bing@foxmail.com
 
+QRCode:
+  imgTime: 3600 #图片缓存时间s
+
 deploy:
   env: pro

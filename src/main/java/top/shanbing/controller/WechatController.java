@@ -14,18 +14,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ZeroCopyHttpOutputMessage;
 import org.springframework.http.codec.multipart.FilePart;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.domain.model.result.ResultUtil;
 import top.shanbing.service.WechatService;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.file.Files;
@@ -97,14 +94,14 @@ public class WechatController {
         return Mono.just(ResultUtil.success("上传成功"));
     }
 
-    @GetMapping()
-    public Object wechat(ServerHttpResponse response){
-        boolean login = wechatService.isLogin();
-        if(!login){
-            return this.getQRCode(response);
-        }else{
-            return Mono.just(ResultUtil.success("已登录"));
-        }
-
-    }
+//    @GetMapping()
+//    public Mono<Void> wechat(ServerHttpResponse response){
+//        boolean login = wechatService.isLogin();
+//        if(!login){
+//            return this.getQRCode(response);
+//        }else{
+//            return Mono.just(ResultUtil.success("已登录"));
+//        }
+//
+//    }
 }

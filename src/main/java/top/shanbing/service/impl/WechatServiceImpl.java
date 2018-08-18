@@ -3,6 +3,7 @@ package top.shanbing.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.shanbing.common.exception.BizException;
 import top.shanbing.common.redis.IRedisManager;
@@ -24,9 +25,14 @@ public class WechatServiceImpl implements WechatService {
     @Autowired
     private IRedisManager redisManager;
 
+    @Value("${QRCode.imgTime}")
+    private Integer imgTime;
+
     @Override
     public void cacheQRCodePath(String path) {
-        redisManager.setex(RedisKeys.WECHAT_QRCODE_PATH,60,path,true);
+        if(imgTime == null)
+            imgTime = 60;
+        redisManager.setex(RedisKeys.WECHAT_QRCODE_PATH,imgTime,path,true);
     }
 
     @Override
