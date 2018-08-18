@@ -59,7 +59,7 @@ public class WechatController {
         String fileQRCodePath = wechatService.getQRCode();
         log.info("QRCode图片路径:{}",fileQRCodePath);
         File file = new File(fileQRCodePath);
-        response.getHeaders().add("Content-Type","image/jpeg");
+        response.getHeaders().add("Content-Type","image/*");
         response.getHeaders().setContentType(MediaType.IMAGE_PNG);
         return zeroCopyResponse.writeWith(file, 0, file.length());
     }
