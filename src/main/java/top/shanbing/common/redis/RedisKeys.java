@@ -7,8 +7,10 @@ package top.shanbing.common.redis;
  */
 public interface RedisKeys {
 
-    /**ip限流*/
+    /**redis限流*/
+    String API_FLOW_RATE = "api:flow:rete:%s";
     String IP_FLOW_RATE = "ip:flow:rete:%s";
+    String API_IP_FLOW_RATE = "api:ip:flow:rete:%s:%s";
 
     /**ip黑名单*/
     String IP_BLOCK = "ip:block:%s";

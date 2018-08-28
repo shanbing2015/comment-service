@@ -34,10 +34,6 @@ public class CommentUtil {
         }
         BlockService blockService = SpringApplicationContext.context.getBean(BlockService.class);
         blockService.queryIpBlock(ip);
-//        IpBlock ipBlock = blockService.getIpBlockById(ip);
-//        if(ipBlock != null ){
-//            throw new BizException(ErrorCodeEnum.IP_BLACK_ERROR);
-//        }
     }
 
 

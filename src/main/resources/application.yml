@@ -21,10 +21,12 @@ spring:
           starttls.enable: true
           socketFactory.port: 465　
           port: 465
-
-
-
-
+  rabbitmq:
+    host: 120.79.223.130
+    port: 5672
+    #username: Guest
+    #password: Guest
+    #virtualHost:
 
 #mybatis相关配置
 mybatis:
@@ -47,6 +49,14 @@ toMail: shan.bing@foxmail.com
 
 QRCode:
   imgTime: 3600 #图片缓存时间s
+
+# 流量控制
+flowRate:
+  devEnvironmentFlowRate: true  #开发环境是否限流
+  ipBlock: true #ip限流 拉入临时黑名单
+  #限流大小
+  maxCount: 5    #总请求数10/s
+  timeSlot : 10  #时间段 秒
 
 deploy:
   env: pro

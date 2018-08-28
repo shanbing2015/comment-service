@@ -9,25 +9,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import top.shanbing.common.Interceptor.FlowRate;
+import top.shanbing.common.flowRate.FlowRateType;
 import top.shanbing.domain.model.comment.CommentAddReq;
 import top.shanbing.domain.model.comment.CommentListReq;
 import top.shanbing.domain.model.result.JsonResult;
 import top.shanbing.domain.model.result.PageResult;
 import top.shanbing.domain.model.result.ResultUtil;
 import top.shanbing.service.CommentService;
-import top.shanbing.util.CommentUtil;
 import top.shanbing.util.HttpUtil;
 
 import java.io.UnsupportedEncodingException;
 
 @RequestMapping("comment/v1")
 @RestController
-public class CommentController {
+public class CommentController extends BashController{
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected CommentService commentService;
 
+    @FlowRate(type = FlowRateType.APIIP_FLOWRATE,count = 1,timeSlot = 3)    //3秒1次限流
     @PostMapping(value = "/save", produces = "application/json" ,consumes="application/json")
     public Mono<JsonResult> save(@RequestBody CommentAddReq addReq,ServerHttpRequest request) throws UnsupportedEncodingException {
         addReq.postUrl = java.net.URLDecoder.decode(addReq.postUrl,"UTF-8");
@@ -42,6 +44,7 @@ public class CommentController {
         return Mono.just(ResultUtil.success());
     }
 
+    @FlowRate(type = FlowRateType.APIIP_FLOWRATE,count = 3,timeSlot = 1)    //1秒3次限流
     @PostMapping(value ="/list", produces = "application/json",consumes="application/json")
     public Mono<JsonResult> list(@RequestBody CommentListReq listReq, ServerHttpRequest request) throws UnsupportedEncodingException{
         listReq.postUrl = java.net.URLDecoder.decode(listReq.postUrl,"UTF-8");

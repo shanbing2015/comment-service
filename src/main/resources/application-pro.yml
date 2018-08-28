@@ -51,7 +51,3 @@ logging:
 deploy:
   env: pro
 
-#限流大小
-rateLimiter: 30     #总请求数10/s
-ipRateLimiter: 5    #IP1
-ipRateLimiterecond: 1 #秒

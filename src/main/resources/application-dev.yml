@@ -44,15 +44,9 @@ spring:
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
 
-
 logging:
   level:
     top.shanbing.domain.mapper: debug
 
 deploy:
   env: dev
-
-#限流大小
-rateLimiter: 100    #总请求数10/s
-ipRateLimiter: 10    #IP1
-ipRateLimiterecond: 1 #秒

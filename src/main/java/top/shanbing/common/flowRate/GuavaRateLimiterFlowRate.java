@@ -1,4 +1,4 @@
-package top.shanbing.common.webFlowRate;
+package top.shanbing.common.flowRate;
 
 import com.google.common.util.concurrent.RateLimiter;
 import org.slf4j.Logger;
@@ -37,7 +37,11 @@ public class GuavaRateLimiterFlowRate {
     }
 
     public void tryAcquire(){
-        if(!limiter.tryAcquire(3,TimeUnit.SECONDS)){
+        tryAcquire(3L);
+    }
+
+    public void tryAcquire(Long s){
+        if(!limiter.tryAcquire(s,TimeUnit.SECONDS)){
             throw new BizException(ErrorCodeEnum.API_FLOW_RATE);
         }
     }

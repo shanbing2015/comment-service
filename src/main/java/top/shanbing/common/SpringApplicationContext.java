@@ -29,7 +29,7 @@ public class SpringApplicationContext {
     }
 
     @PostConstruct
-    public void init(){
+    private void init(){
         appEnvironment = env;
         logger.info("当前环境:"+appEnvironment);
         // 分页配置
