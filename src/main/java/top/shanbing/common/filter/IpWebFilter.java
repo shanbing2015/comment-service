@@ -58,7 +58,7 @@ public class IpWebFilter implements WebFilter {
         ServerHttpRequest request =  serverWebExchange.getRequest();
         ServerHttpResponse response =  serverWebExchange.getResponse();
         String urlPath = request.getURI().getPath();
-        if(!urlSet.contains(urlPath)){
+        if(false && !urlSet.contains(urlPath)){
             return webFilterChain.filter(serverWebExchange);
         }
         try {

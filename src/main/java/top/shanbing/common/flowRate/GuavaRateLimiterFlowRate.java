@@ -21,8 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class GuavaRateLimiterFlowRate {
     private static Logger logger = LoggerFactory.getLogger(GuavaRateLimiterFlowRate.class);
 
-    @Value("${rateLimiter}")
-    private int rateLimiter;
+    //@Value("${rateLimiter}")
+    private int rateLimiter = 100;
 
     private  RateLimiter limiter;
 
