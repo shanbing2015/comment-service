@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 /**
+ * MQ消费者注册中心
  * @author shanbing
  * @date 2018/8/23.
  */

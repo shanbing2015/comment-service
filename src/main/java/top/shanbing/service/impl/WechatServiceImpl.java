@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.shanbing.common.exception.BizException;
+import top.shanbing.mq.rabbitmq.RabbitMqMessageSender;
+import top.shanbing.mq.rabbitmq.constant.RabbitMqConstant;
 import top.shanbing.redis.IRedisManager;
 import top.shanbing.redis.RedisKeys;
 import top.shanbing.domain.enums.ErrorCodeEnum;
@@ -27,6 +29,9 @@ public class WechatServiceImpl implements WechatService {
 
     @Value("${QRCode.imgTime}")
     private Integer imgTime;
+
+    @Autowired
+    private RabbitMqMessageSender mqMessageSender;
 
     @Override
     public void cacheQRCodePath(String path) {
@@ -61,7 +66,9 @@ public class WechatServiceImpl implements WechatService {
 
     @Override
     public boolean notifyPythonGenerateQRCode() {
-        //todo 通知未实现
+        String taskQueueName = RabbitMqConstant.QUEUE_TEST;
+        String objectJson = "getQR";
+        mqMessageSender.send(taskQueueName,objectJson);
         return true;
     }
 
