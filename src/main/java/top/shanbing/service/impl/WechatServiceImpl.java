@@ -52,6 +52,11 @@ public class WechatServiceImpl implements WechatService {
     }
 
     @Override
+    public void refreshQR() {
+        notifyPythonGenerateQRCode();
+    }
+
+    @Override
     public String getCacheQRCodePath() {
         return redisManager.get(RedisKeys.WECHAT_QRCODE_PATH,String.class);
     }

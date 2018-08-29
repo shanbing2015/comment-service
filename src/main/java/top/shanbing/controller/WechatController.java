@@ -64,6 +64,11 @@ public class WechatController {
         return zeroCopyResponse.writeWith(file, 0, file.length());
     }
 
+    @GetMapping("refreshQR")
+    public void refreshQR(){
+        wechatService.refreshQR();
+    }
+
     @GetMapping("QRCode/download")
     public Mono<Void> downloadQRCode(ServerHttpResponse response){
         ZeroCopyHttpOutputMessage zeroCopyResponse = (ZeroCopyHttpOutputMessage) response;

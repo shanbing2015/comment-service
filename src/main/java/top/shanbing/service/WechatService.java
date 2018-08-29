@@ -15,6 +15,9 @@ public interface WechatService {
     /**获取二维码文件路径*/
     String getQRCode();
 
+    /**刷新二维码*/
+    void refreshQR();
+
     /**获取redis缓存二维码*/
     String getCacheQRCodePath();
 
