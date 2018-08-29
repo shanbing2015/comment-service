@@ -3,10 +3,9 @@ package top.shanbing.util;
 import org.springframework.stereotype.Component;
 import top.shanbing.common.SpringApplicationContext;
 import top.shanbing.common.exception.BizException;
-import top.shanbing.common.redis.IRedisManager;
-import top.shanbing.common.redis.RedisKeys;
+import top.shanbing.redis.IRedisManager;
+import top.shanbing.redis.RedisKeys;
 import top.shanbing.domain.entity.CommentSites;
-import top.shanbing.domain.entity.IpBlock;
 import top.shanbing.domain.enums.ErrorCodeEnum;
 import top.shanbing.service.BlockService;
 

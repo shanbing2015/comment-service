@@ -13,12 +13,19 @@
 [使用教程][1]
 
 ---
-### 最基本需求功能
+### 业务功能
 > * 帖子发表评论
 > * 帖子评论展示
 > * 回复评论
-> * 接口限流、IP限流及监控
-> * 帖子关键字过滤监控
+---
+
+---
+### 系统功能
+> * @FlowRate注解方法限流,属性可灵活配置限流方式
+> * 基于ip黑名单的filter过滤器,ip黑名单依赖于ip限流管理
+> * @RedisCache注解方法缓存，灵活配置是否穿透缓存
+> * RabbitMQ消息
+> * Mail邮件发送
 ---
 
 ### 服务端开发
@@ -27,9 +34,9 @@
 主要用到的技术和框架以及依赖服务
 >* spring-boot-2
 >* spring-boot-starter-webflux
->* mysql
+>* mysql、redis
 >* Guave的RateLimiter限流策略
->* 基于redis的IP访问计数限流监控IP策略
+>* 基于redis的限流、监控IP策略
 >* 全局异常处理:GlobalExceptionHandler
 >* application多环境配置
 
@@ -53,6 +60,10 @@
 2018.08.06  新增jasypt加密（待验证安全问题）
 
 2018.08.07  新增接口限流和ip限流（GuaveRateLimiter 和 Redis）
+
+2018.08.15  新增MQ，完善中
+
+2018.08.26  新增redis缓存方案
 
             
 

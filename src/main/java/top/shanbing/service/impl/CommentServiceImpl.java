@@ -15,7 +15,7 @@ import top.shanbing.domain.model.comment.CommentListReq;
 import top.shanbing.domain.model.comment.CommentListRes;
 import top.shanbing.domain.model.comment.ReplyComment;
 import top.shanbing.domain.model.result.PageResult;
-import top.shanbing.sdk.mail.MailUtil;
+import top.shanbing.mail.MailUtil;
 import top.shanbing.service.CommentService;
 import top.shanbing.util.CommentUtil;
 

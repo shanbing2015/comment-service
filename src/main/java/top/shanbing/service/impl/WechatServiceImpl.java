@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import top.shanbing.common.exception.BizException;
-import top.shanbing.common.redis.IRedisManager;
-import top.shanbing.common.redis.RedisKeys;
+import top.shanbing.redis.IRedisManager;
+import top.shanbing.redis.RedisKeys;
 import top.shanbing.domain.enums.ErrorCodeEnum;
 import top.shanbing.service.WechatService;
 
