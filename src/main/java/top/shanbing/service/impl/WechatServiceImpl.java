@@ -10,7 +10,6 @@ import top.shanbing.mq.rabbitmq.RabbitMqMessageSender;
 import top.shanbing.mq.rabbitmq.constant.RabbitMqConstant;
 import top.shanbing.redis.IRedisManager;
 import top.shanbing.redis.RedisKeys;
-import top.shanbing.domain.enums.ErrorCodeEnum;
 import top.shanbing.service.WechatService;
 
 import java.io.File;
@@ -47,14 +46,7 @@ public class WechatServiceImpl implements WechatService {
             log.info("未获取到有效二维码路径,path:{}",filePath);
             boolean notify = notifyPythonGenerateQRCode();
             log.info("通知python服务生成登录二维码,结果:{}",notify);
-            if(!notify){
-                throw new BizException(ErrorCodeEnum.PYTHON_ERROR);
-            }
-            filePath = this.getCacheQRCodePath();
-            if(filePath == null || filePath.trim().equals("") || !new File(filePath).exists()){
-                log.error("获取的二维码图片地址错误，path:{}",filePath);
-                throw new BizException(ErrorCodeEnum.FILE_ERROR);
-            }
+            // 返回默认图片
         }
         return filePath;
     }
@@ -77,6 +69,13 @@ public class WechatServiceImpl implements WechatService {
         String wechatName = redisManager.get(RedisKeys.WECHAT_LOGIN,String.class);
         boolean wechatLogin = wechatName!=null;
         log.info("微信心跳：{},当前用户：{}",wechatLogin,wechatName);
+        if(!wechatLogin){
+            String filePath = this.getCacheQRCodePath();
+            if(filePath == null || filePath.trim().equals("") || !new File(filePath).exists()){
+                boolean notify = notifyPythonGenerateQRCode();
+                log.info("通知python服务生成登录二维码,结果:{}",notify);
+            }
+        }
         return wechatLogin;
     }
 }
