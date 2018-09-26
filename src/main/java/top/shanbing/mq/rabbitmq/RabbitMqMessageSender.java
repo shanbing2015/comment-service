@@ -38,12 +38,11 @@ public class RabbitMqMessageSender {
         connection = connectFactory.newConnection();
     }
 
-    /**发送消息方法主体，默认异步发送消息*/
-    @Async
-    public void send(String taskQueueName, String objectJson) {
+    public void syncSend(String taskQueueName, String objectJson) {
         Channel channel = null;
         try {
             channel = connection.createChannel();
+            //String queue, boolean durable是否持久化, boolean exclusive是否排外的, boolean autoDelete 是否自动删除, Map<String, Object> arguments) 队列中的消息什么时候会自动被删除
             channel.queueDeclare(taskQueueName, true, false, false, null);
             channel.basicPublish("", taskQueueName, MessageProperties.PERSISTENT_TEXT_PLAIN, SafeEncoder.encode(objectJson));
         } catch (Exception e) {
@@ -51,6 +50,12 @@ public class RabbitMqMessageSender {
         } finally {
             closeChannel(channel);
         }
+    }
+
+    /**发送消息方法主体，默认异步发送消息*/
+    @Async
+    public void send(String taskQueueName, String objectJson) {
+        syncSend(taskQueueName,objectJson);
     }
 
     @Async

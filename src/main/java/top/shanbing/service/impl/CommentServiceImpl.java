@@ -56,8 +56,7 @@ public class CommentServiceImpl implements CommentService {
 
         String notifyText = "评论者:"+comment.getCommentName();
         notifyText += "\n评论内容:"+comment.getCommentContent();
-        notifyText += "\n帖子地址:"+post.getPostUrl();
-
+        notifyText += "\n帖子地址:<a href='"+addReq.postUrl+post.getPostUrl()+"'>"+addReq.postUrl+post.getPostUrl()+"</a>";
         notifyText += "\n\nIP:"+comment.getIp()+",来源:"+comment.getDeviceType();
         MailUtil.sendCommentNotify("",notifyText);
     }

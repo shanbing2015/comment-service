@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import top.shanbing.common.exception.BizException;
 import top.shanbing.mq.rabbitmq.RabbitMqMessageSender;
 import top.shanbing.mq.rabbitmq.constant.RabbitMqConstant;
 import top.shanbing.redis.IRedisManager;
@@ -65,8 +64,15 @@ public class WechatServiceImpl implements WechatService {
     public boolean notifyPythonGenerateQRCode() {
         String taskQueueName = RabbitMqConstant.QUEUE_TEST;
         String objectJson = "getQR";
-        mqMessageSender.send(taskQueueName,objectJson);
+        mqMessageSender.syncSend(taskQueueName,objectJson);
         return true;
+    }
+
+    @Override
+    public void sendCommentNotify(String notifyText) {
+        String taskQueueName = RabbitMqConstant.QUEUE_COMMENT;
+        String objectJson = notifyText;
+        mqMessageSender.syncSend(taskQueueName,objectJson);
     }
 
     @Override

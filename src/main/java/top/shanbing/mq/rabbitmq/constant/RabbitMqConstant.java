@@ -7,6 +7,8 @@ public interface RabbitMqConstant {
 
     String QUEUE_TEST = "queue_test";
 
+    String QUEUE_COMMENT = "queue_comment";
+
     /**
      * 延迟路由名称
      */

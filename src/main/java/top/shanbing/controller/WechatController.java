@@ -99,14 +99,5 @@ public class WechatController {
         return Mono.just(ResultUtil.success("上传成功"));
     }
 
-//    @GetMapping()
-//    public Mono<Void> wechat(ServerHttpResponse response){
-//        boolean login = wechatService.isLogin();
-//        if(!login){
-//            return this.getQRCode(response);
-//        }else{
-//            return Mono.just(ResultUtil.success("已登录"));
-//        }
-//
-//    }
+
 }

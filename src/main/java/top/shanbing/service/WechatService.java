@@ -23,4 +23,7 @@ public interface WechatService {
 
     /**通知python服务生成微信登录二维码*/
     boolean notifyPythonGenerateQRCode();
+
+    /**发送新的评论内容到python*/
+    void sendCommentNotify(String notifyText);
 }
