@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.shanbing.flowRate.FlowRate;
 import top.shanbing.flowRate.FlowRateAction;
+import top.shanbing.mail.MailUtil;
 
 import java.time.LocalDateTime;
 
@@ -33,6 +34,12 @@ public class TestController {
     @FlowRate( count = 2 ,timeSlot = 1)
     public String index4(){
         return "API限流#"+LocalDateTime.now();
+    }
+
+    @RequestMapping("/12306notify")
+    public void notifyTest(){
+        System.out.println("12306notify");
+        MailUtil.sendCommentNotify("购票通知","12306notify");
     }
 
 }
