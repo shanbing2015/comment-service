@@ -48,4 +48,16 @@ public class MailUtil {
            logger.error("评论邮件通知错误",e);
        }
     }
+
+    public static void sendCommentNotify(String toMail,String title,String text){
+        try {
+            if(SpringApplicationContext.isProd()){
+                mailService.sendMail(from,toMail,title,text);
+            }else{
+                logger.info("非正式环境，不进行邮件通知");
+            }
+        }catch (Exception e){
+            logger.error("邮件通知错误",e);
+        }
+    }
 }
