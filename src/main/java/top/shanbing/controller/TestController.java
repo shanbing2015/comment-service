@@ -36,10 +36,11 @@ public class TestController {
         return "API限流#"+LocalDateTime.now();
     }
 
-    @RequestMapping("/12306notify")
-    public void notifyTest(){
-        System.out.println("12306notify");
-        MailUtil.sendCommentNotify("购票通知","12306notify");
+    @RequestMapping("/bypass/notify")
+    public String notifyTest(String text){
+        System.out.println("12306notify"+text);
+        MailUtil.sendCommentNotify("购票通知","内容:"+text);
+        return "ok\t"+LocalDateTime.now();
     }
 
 }
