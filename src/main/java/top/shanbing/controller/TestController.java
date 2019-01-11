@@ -41,9 +41,9 @@ public class TestController {
         return "API限流#"+LocalDateTime.now();
     }
 
-    @FlowRate(type = FlowRateAction.APIIP_FLOWRATE,count = 1,timeSlot = 3)    //3秒1次限流
+    @FlowRate(type = FlowRateAction.APIIP_FLOWRATE,count = 1,timeSlot = 10)    //10秒1次限流
     @RequestMapping("/bypass/notify")
-    public String notifyTest(String toMail,String msg){
+    public String notifyTest(String toMail,String msg,ServerHttpRequest request){
         log.info("toMail:{},msg:{}",toMail,msg);
         MailUtil.sendCommentNotify(toMail,"购票订单成功通知","内容:"+msg+"\n\n(请勿非法使用)");
         return "ok\t"+LocalDateTime.now();
