@@ -41,6 +41,7 @@ public class TestController {
         return "API限流#"+LocalDateTime.now();
     }
 
+    @FlowRate(type = FlowRateAction.APIIP_FLOWRATE,count = 1,timeSlot = 3)    //3秒1次限流
     @RequestMapping("/bypass/notify")
     public String notifyTest(String toMail,String msg){
         log.info("toMail:{},msg:{}",toMail,msg);
