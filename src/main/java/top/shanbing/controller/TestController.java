@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.shanbing.domain.model.MailReq;
+import top.shanbing.domain.model.comment.BypassNotifyReq;
 import top.shanbing.flowRate.FlowRate;
 import top.shanbing.flowRate.FlowRateAction;
 import top.shanbing.mail.MailUtil;
@@ -41,12 +42,15 @@ public class TestController {
         return "API限流#"+LocalDateTime.now();
     }
 
-    @FlowRate(type = FlowRateAction.APIIP_FLOWRATE,count = 1,timeSlot = 10)    //10秒1次限流
+    //@FlowRate(type = FlowRateAction.APIIP_FLOWRATE,count = 1,timeSlot = 10)    //10秒1次限流
     @RequestMapping("/bypass/notify")
-    public String notifyTest(String toMail,String msg,ServerHttpRequest request){
-        log.info("toMail:{},msg:{}",toMail,msg);
-        MailUtil.sendCommentNotify(toMail,"购票订单成功通知","内容:"+msg+"\n\n(请勿非法使用)");
+    public String notifyTest(@RequestBody BypassNotifyReq req, ServerHttpRequest request){
+        log.info("toMail:{},msg:{}",req.toMail,req.msg);
+        if(req.toMail == null){
+            return "toMail参数为空\t"+LocalDateTime.now();
+        }
+        log.info("toMail:{},msg:{}",req.toMail,req.msg);
+        MailUtil.sendCommentNotify(req.toMail,"购票订单成功通知","内容:"+req.msg+"\n\n(请勿非法使用)");
         return "ok\t"+LocalDateTime.now();
     }
-
 }
