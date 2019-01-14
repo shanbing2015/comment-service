@@ -18,7 +18,7 @@ import java.util.concurrent.*;
  * @author shanbing
  * @date 2018/8/23.
  */
-@Component
+//@Component
 public class MqConsumerRegister {
 
     private static Logger logger = LoggerFactory.getLogger(MqConsumerRegister.class);

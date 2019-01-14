@@ -21,8 +21,8 @@ import java.util.Map;
  * @author shanbing
  * @date 2018/8/29.
  */
-@Component
-@EnableAsync
+//@Component
+//@EnableAsync
 public class RabbitMqMessageSender {
     private static Logger logger = LoggerFactory.getLogger(RabbitMqMessageSender.class);
 

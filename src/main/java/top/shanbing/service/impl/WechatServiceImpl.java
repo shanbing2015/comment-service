@@ -28,7 +28,7 @@ public class WechatServiceImpl implements WechatService {
     @Value("${QRCode.imgTime}")
     private Integer imgTime;
 
-    @Autowired
+    //@Autowired
     private RabbitMqMessageSender mqMessageSender;
 
     @Override

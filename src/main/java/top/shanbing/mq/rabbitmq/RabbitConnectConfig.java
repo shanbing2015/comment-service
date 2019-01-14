@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class RabbitConnectConfig {
 	static Logger logger = LoggerFactory.getLogger(RabbitConnectConfig.class);
 	@Value("${spring.rabbitmq.host}")
