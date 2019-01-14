@@ -27,7 +27,7 @@ import java.util.Set;
  * ip 限制
  */
 
-@Component
+//@Component
 @Order(1)
 public class IpWebFilter implements WebFilter {
     protected static Logger logger = LoggerFactory.getLogger(IpWebFilter.class);

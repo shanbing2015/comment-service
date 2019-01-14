@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author shanbing
  * @date 2018/8/15.
  */
-@Component
+//@Component
 @Order(3)
 public class IdentityFilter implements WebFilter {
     private static String key = "identity";
